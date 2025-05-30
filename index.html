@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vaul - Gestor de Contraseñas</title>
+  <meta name="theme-color" content="#1f1f1f" />
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 1em;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+    input,
+    button,
+    select,
+    textarea {
+      width: 100%;
+      margin: 0.5em 0;
+      padding: 0.7em;
+      border-radius: 8px;
+      border: none;
+      font-size: 1em;
+    }
+    button {
+      background: #2d89ef;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #1b5fbd;
+    }
+    .card {
+      background: #1f1f1f;
+      padding: 1em;
+      border-radius: 12px;
+      margin-bottom: 1em;
+      box-shadow: 0 0 10px #0003;
+      word-wrap: break-word;
+    }
+    .hidden {
+      display: none;
+    }
+    .lang {
+      float: right;
+      margin-top: -2.5em;
+      width: 70px;
+      background: #333;
+      color: white;
+      border-radius: 6px;
+      padding: 0.3em;
+      border: none;
+    }
+    #genPassBtn {
+      background: #28a745;
+      margin-top: 0;
+    }
+    #genPassBtn:hover {
+      background: #1e7e34;
+    }
+    label {
+      margin-top: 1em;
+      display: block;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="title">Vaul - Gestor de Contraseñas</h1>
+    <select id="lang" class="lang" title="Selecciona idioma">
+      <option value="es" selected>ES</option>
+      <option value="en">EN</option>
+    </select>
+
+    <div id="auth">
+      <h2>Iniciar sesión</h2>
+      <input type="email" id="email" placeholder="Correo electrónico" />
+      <input type="password" id="password" placeholder="Contraseña" />
+      <button id="loginBtn">Iniciar sesión</button>
+      <p>¿No tienes cuenta? <button id="showRegister" style="background:none;border:none;color:#2d89ef;cursor:pointer;padding:0;">Regístrate aquí</button></p>
+    </div>
+
+    <div id="register" class="hidden">
+      <h2>Registro</h2>
+      <input type="email" id="regEmail" placeholder="Correo electrónico" />
+      <input type="password" id="regPassword" placeholder="Contraseña (mínimo 6 caracteres)" />
+      <button id="registerBtn">Registrar</button>
+      <p>¿Ya tienes cuenta? <button id="showLogin" style="background:none;border:none;color:#2d89ef;cursor:pointer;padding:0;">Inicia sesión aquí</button></p>
+    </div>
+
+    <div id="main" class="hidden">
+      <h2>Bienvenido a Vaul</h2>
+      <label for="masterKey">Clave Maestra (para cifrar y descifrar):</label>
+      <input type="password" id="masterKey" placeholder="Clave Maestra" />
+      <button id="unlockBtn">Desbloquear Vaul</button>
+
+      <div id="passwordArea" class="hidden">
+        <label for="pwdNote">Descripción</label>
+        <textarea id="pwdNote" placeholder="Descripción"></textarea>
+        <label for="pwdValue">Contraseña</label>
+        <input type="text" id="pwdValue" placeholder="Contraseña" />
+        <button id="genPassBtn">Generar contraseña segura</button>
+        <button id="savePwdBtn">Guardar Contraseña</button>
+        <h3>Contraseñas guardadas:</h3>
+        <div id="list"></div>
+        <button id="logoutBtn" style="background:#c82333;margin-top:1em;">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Config Firebase
+    const config = {
+      apiKey: "AIzaSyDyk6XjQ72k73oza9fkkUxup9GQvDsFT5o",
+      authDomain: "weatherwise-aywzg.firebaseapp.com",
+      projectId: "weatherwise-aywzg",
+      storageBucket: "weatherwise-aywzg.firebasestorage.app",
+      messagingSenderId: "699516071771",
+      appId: "1:699516071771:web:43f9af033fbad8a738b47e"
+    };
+    firebase.initializeApp(config);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    let userId = null;
+    let masterKey = null;
+
+    const $ = (id) => document.getElementById(id);
+
+    // Mostrar registro o login
+    $("showRegister").addEventListener("click", () => {
+      $("auth").classList.add("hidden");
+      $("register").classList.remove("hidden");
+    });
+    $("showLogin").addEventListener("click", () => {
+      $("register").classList.add("hidden");
+      $("auth").classList.remove("hidden");
+    });
+
+    // Registro
+    $("registerBtn").addEventListener("click", () => {
+      const email = $("regEmail").value.trim();
+      const password = $("regPassword").value.trim();
+      if (!email || !password) return alert("Completa todos los campos para registrarte");
+      if (password.length < 6) return alert("La contraseña debe tener al menos 6 caracteres");
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(() => alert("Registro exitoso. Ya puedes iniciar sesión"))
+        .catch((error) => alert("Error al registrar: " + error.message));
+    });
+
+    // Login
+    $("loginBtn").addEventListener("click", () => {
+      const email = $("email").value.trim();
+      const password = $("password").value.trim();
+      if (!email || !password) return alert("Completa todos los campos para iniciar sesión");
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          // Login exitoso, no hacemos nada porque onAuthStateChanged maneja la UI
+        })
+        .catch((error) => {
+          if (error.code === "auth/user-not-found") {
+            alert("Este correo no está registrado. Por favor, regístrate primero para acceder.");
+          } else {
+            alert("Error al iniciar sesión: " + error.message);
+          }
+        });
+    });
+
+    // Estado de autenticación
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        userId = user.uid;
+        $("auth").classList.add("hidden");
+        $("register").classList.add("hidden");
+        $("main").classList.remove("hidden");
+        $("passwordArea").classList.add("hidden");
+        masterKey = null;
+        $("masterKey").value = "";
+      } else {
+        userId = null;
+        masterKey = null;
+        $("auth").classList.remove("hidden");
+        $("register").classList.add("hidden");
+        $("main").classList.add("hidden");
+        $("passwordArea").classList.add("hidden");
+      }
+    });
+
+    // Logout sin error ni reload
+    $("logoutBtn").addEventListener("click", () => {
+      auth.signOut()
+        .then(() => {
+          userId = null;
+          masterKey = null;
+          $("auth").classList.remove("hidden");
+          $("main").classList.add("hidden");
+          $("passwordArea").classList.add("hidden");
+        })
+        .catch((error) => alert("Error al cerrar sesión: " + error.message));
+    });
+
+    // Desbloquear Vaul con clave maestra
+    $("unlockBtn").addEventListener("click", () => {
+      masterKey = $("masterKey").value;
+      if (!masterKey) return alert("Debes ingresar la clave maestra para desbloquear Vaul");
+      $("passwordArea").classList.remove("hidden");
+      loadPwds();
+    });
+
+    // Funciones cifrado básico XOR + Base64
+    function encrypt(text) {
+      return btoa(
+        text
+          .split("")
+          .map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ masterKey.charCodeAt(i % masterKey.length)))
+          .join("")
+      );
+    }
+    function decrypt(text) {
+      text = atob(text);
+      return text
+        .split("")
+        .map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ masterKey.charCodeAt(i % masterKey.length)))
+        .join("");
+    }
+
+    // Guardar contraseña
+    $("savePwdBtn").addEventListener("click", () => {
+      const note = $("pwdNote").value.trim();
+      const value = $("pwdValue").value.trim();
+      if (!note || !value) return alert("Completa la descripción y la contraseña");
+
+      const data = {
+        note: encrypt(note),
+        value: encrypt(value),
+        date: new Date().toISOString(),
+      };
+      db.collection("users").doc(userId).collection("passwords").add(data)
+        .then(() => {
+          $("pwdNote").value = "";
+          $("pwdValue").value = "";
+          loadPwds();
+        })
+        .catch((e) => alert("Error guardando contraseña: " + e.message));
+    });
+
+    // Cargar contraseñas
+    function loadPwds() {
+      const list = $("list");
+      list.innerHTML = "";
+      db.collection("users").doc(userId).collection("passwords")
+        .orderBy("date", "desc")
+        .get()
+        .then((snapshot) => {
+          snapshot.forEach((doc) => {
+            const d = doc.data();
+            const div = document.createElement("div");
+            div.className = "card";
+            div.innerHTML = `<strong>${decrypt(d.note)}</strong><br>${decrypt(d.value)}`;
+            list.appendChild(div);
+          });
+        })
+        .catch((e) => alert("Error cargando contraseñas: " + e.message));
+    }
+
+    // Generador de contraseña segura (8 o 4 caracteres)
+    $("genPassBtn").addEventListener("click", () => {
+      let length = prompt("¿Qué longitud quieres para la contraseña? (4 u 8 caracteres)", "8");
+      if (length !== "4" && length !== "8") {
+        alert("Solo puedes elegir 4 u 8 caracteres.");
+        return;
+      }
+      const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+      let pass = "";
+      for (let i = 0; i < parseInt(length); i++) {
+        pass += charset.charAt(Math.floor(Math.random() * charset.length));
+      }
+      $("pwdValue").value = pass;
+    });
+
+    // Cambio de idioma - solo cambia título por ahora
+    const translations = {
+      es: { title: "Vaul - Gestor de Contraseñas" },
+      en: { title: "Vaul - Password Manager" },
+    };
+    $("lang").addEventListener("change", (e) => {
+      const lang = e.target.value;
+      document.title = translations[lang].title;
+      $("title").textContent = translations[lang].title;
+    });
+
+  </script>
+</body>
+</html>
