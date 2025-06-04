@@ -4,307 +4,234 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Vaul - Gestor de Contraseñas</title>
-  <meta name="theme-color" content="#1f1f1f" />
   <style>
     body {
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
       background: #121212;
-      color: #fff;
-      margin: 0;
-      padding: 1em;
-    }
-    .container {
+      color: white;
       max-width: 600px;
       margin: auto;
+      padding: 1rem;
     }
-    input,
-    button,
-    select,
-    textarea {
+    input, textarea, button {
       width: 100%;
-      margin: 0.5em 0;
       padding: 0.7em;
-      border-radius: 8px;
+      margin: 0.5em 0;
+      border-radius: 6px;
       border: none;
       font-size: 1em;
     }
     button {
+      cursor: pointer;
       background: #2d89ef;
       color: white;
       font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s;
     }
     button:hover {
       background: #1b5fbd;
     }
-    .card {
-      background: #1f1f1f;
-      padding: 1em;
-      border-radius: 12px;
-      margin-bottom: 1em;
-      box-shadow: 0 0 10px #0003;
-      word-wrap: break-word;
-    }
     .hidden {
       display: none;
     }
-    .lang {
-      float: right;
-      margin-top: -2.5em;
-      width: 70px;
-      background: #333;
-      color: white;
-      border-radius: 6px;
-      padding: 0.3em;
-      border: none;
+    .card {
+      background: #1f1f1f;
+      padding: 1em;
+      margin-bottom: 1em;
+      border-radius: 8px;
+      word-wrap: break-word;
     }
-    #genPassBtn {
-      background: #28a745;
-      margin-top: 0;
-    }
-    #genPassBtn:hover {
-      background: #1e7e34;
-    }
-    label {
-      margin-top: 1em;
-      display: block;
-      font-weight: bold;
-      font-size: 1.1em;
+    .card button {
+      width: auto;
+      padding: 0.3em 0.6em;
+      margin-right: 0.5em;
+      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1 id="title">Vaul - Gestor de Contraseñas</h1>
-    <select id="lang" class="lang" title="Selecciona idioma">
-      <option value="es" selected>ES</option>
-      <option value="en">EN</option>
-    </select>
+  <h1>Vaul - Gestor de Contraseñas</h1>
 
-    <div id="auth">
-      <h2>Iniciar sesión</h2>
-      <input type="email" id="email" placeholder="Correo electrónico" />
-      <input type="password" id="password" placeholder="Contraseña" />
-      <button id="loginBtn">Iniciar sesión</button>
-      <p>¿No tienes cuenta? <button id="showRegister" style="background:none;border:none;color:#2d89ef;cursor:pointer;padding:0;">Regístrate aquí</button></p>
-    </div>
-
-    <div id="register" class="hidden">
-      <h2>Registro</h2>
-      <input type="email" id="regEmail" placeholder="Correo electrónico" />
-      <input type="password" id="regPassword" placeholder="Contraseña (mínimo 6 caracteres)" />
-      <button id="registerBtn">Registrar</button>
-      <p>¿Ya tienes cuenta? <button id="showLogin" style="background:none;border:none;color:#2d89ef;cursor:pointer;padding:0;">Inicia sesión aquí</button></p>
-    </div>
-
-    <div id="main" class="hidden">
-      <h2>Bienvenido a Vaul</h2>
-      <label for="masterKey">Clave Maestra (para cifrar y descifrar):</label>
-      <input type="password" id="masterKey" placeholder="Clave Maestra" />
-      <button id="unlockBtn">Desbloquear Vaul</button>
-
-      <div id="passwordArea" class="hidden">
-        <label for="pwdNote">Descripción</label>
-        <textarea id="pwdNote" placeholder="Descripción"></textarea>
-        <label for="pwdValue">Contraseña</label>
-        <input type="text" id="pwdValue" placeholder="Contraseña" />
-        <button id="genPassBtn">Generar contraseña segura</button>
-        <button id="savePwdBtn">Guardar Contraseña</button>
-        <h3>Contraseñas guardadas:</h3>
-        <div id="list"></div>
-        <button id="logoutBtn" style="background:#c82333;margin-top:1em;">Cerrar sesión</button>
-      </div>
-    </div>
+  <div id="auth">
+    <input type="email" id="email" placeholder="Correo electrónico" />
+    <input type="password" id="password" placeholder="Contraseña" />
+    <button id="loginBtn">Iniciar sesión</button>
+    <button id="registerBtn">Registrar cuenta</button>
   </div>
 
+  <div id="main" class="hidden">
+    <button id="logoutBtn" style="background:#c82333;">Cerrar sesión</button>
+
+    <h2>Guardar / Editar Contraseña</h2>
+    <input type="text" id="note" placeholder="Descripción" />
+    <input type="text" id="pwd" placeholder="Contraseña" />
+    <button id="saveBtn">Guardar</button>
+
+    <h2>Contraseñas guardadas</h2>
+    <div id="list"></div>
+  </div>
+
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // Config Firebase
-    const config = {
+    const firebaseConfig = {
       apiKey: "AIzaSyDyk6XjQ72k73oza9fkkUxup9GQvDsFT5o",
       authDomain: "weatherwise-aywzg.firebaseapp.com",
       projectId: "weatherwise-aywzg",
-      storageBucket: "weatherwise-aywzg.firebasestorage.app",
+      storageBucket: "weatherwise-aywzg.appspot.com",
       messagingSenderId: "699516071771",
       appId: "1:699516071771:web:43f9af033fbad8a738b47e"
     };
-    firebase.initializeApp(config);
-    const db = firebase.firestore();
+
+    firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
+    const db = firebase.firestore();
 
-    let userId = null;
-    let masterKey = null;
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const loginBtn = document.getElementById("loginBtn");
+    const registerBtn = document.getElementById("registerBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const mainDiv = document.getElementById("main");
+    const authDiv = document.getElementById("auth");
+    const noteInput = document.getElementById("note");
+    const pwdInput = document.getElementById("pwd");
+    const saveBtn = document.getElementById("saveBtn");
+    const listDiv = document.getElementById("list");
 
-    const $ = (id) => document.getElementById(id);
+    let currentUserId = null;
+    let editingId = null;
 
-    // Mostrar registro o login
-    $("showRegister").addEventListener("click", () => {
-      $("auth").classList.add("hidden");
-      $("register").classList.remove("hidden");
-    });
-    $("showLogin").addEventListener("click", () => {
-      $("register").classList.add("hidden");
-      $("auth").classList.remove("hidden");
-    });
+    // Simple cifrado base64 (para evitar texto plano)
+    function encrypt(text) {
+      return btoa(text);
+    }
+    function decrypt(text) {
+      return atob(text);
+    }
 
-    // Registro
-    $("registerBtn").addEventListener("click", () => {
-      const email = $("regEmail").value.trim();
-      const password = $("regPassword").value.trim();
-      if (!email || !password) return alert("Completa todos los campos para registrarte");
-      if (password.length < 6) return alert("La contraseña debe tener al menos 6 caracteres");
-
-      auth.createUserWithEmailAndPassword(email, password)
-        .then(() => alert("Registro exitoso. Ya puedes iniciar sesión"))
-        .catch((error) => alert("Error al registrar: " + error.message));
-    });
-
-    // Login
-    $("loginBtn").addEventListener("click", () => {
-      const email = $("email").value.trim();
-      const password = $("password").value.trim();
-      if (!email || !password) return alert("Completa todos los campos para iniciar sesión");
-
+    loginBtn.onclick = () => {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+      if (!email || !password) return alert("Completa correo y contraseña");
       auth.signInWithEmailAndPassword(email, password)
-        .then(() => {
-          // Login exitoso, no hacemos nada porque onAuthStateChanged maneja la UI
-        })
-        .catch((error) => {
-          if (error.code === "auth/user-not-found") {
-            alert("Este correo no está registrado. Por favor, regístrate primero para acceder.");
-          } else {
-            alert("Error al iniciar sesión: " + error.message);
-          }
-        });
-    });
+        .catch(e => alert("Error login: " + e.message));
+    };
 
-    // Estado de autenticación
-    auth.onAuthStateChanged((user) => {
+    registerBtn.onclick = () => {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+      if (!email || !password) return alert("Completa correo y contraseña");
+      if(password.length < 6) return alert("La contraseña debe tener al menos 6 caracteres");
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(() => alert("Cuenta creada. Ya puedes iniciar sesión"))
+        .catch(e => alert("Error registro: " + e.message));
+    };
+
+    logoutBtn.onclick = () => {
+      auth.signOut();
+    };
+
+    auth.onAuthStateChanged(user => {
       if (user) {
-        userId = user.uid;
-        $("auth").classList.add("hidden");
-        $("register").classList.add("hidden");
-        $("main").classList.remove("hidden");
-        $("passwordArea").classList.add("hidden");
-        masterKey = null;
-        $("masterKey").value = "";
+        currentUserId = user.uid;
+        authDiv.classList.add("hidden");
+        mainDiv.classList.remove("hidden");
+        loadPasswords();
       } else {
-        userId = null;
-        masterKey = null;
-        $("auth").classList.remove("hidden");
-        $("register").classList.add("hidden");
-        $("main").classList.add("hidden");
-        $("passwordArea").classList.add("hidden");
+        currentUserId = null;
+        authDiv.classList.remove("hidden");
+        mainDiv.classList.add("hidden");
+        clearForm();
+        listDiv.innerHTML = "";
       }
     });
 
-    // Logout sin error ni reload
-    $("logoutBtn").addEventListener("click", () => {
-      auth.signOut()
-        .then(() => {
-          userId = null;
-          masterKey = null;
-          $("auth").classList.remove("hidden");
-          $("main").classList.add("hidden");
-          $("passwordArea").classList.add("hidden");
-        })
-        .catch((error) => alert("Error al cerrar sesión: " + error.message));
-    });
-
-    // Desbloquear Vaul con clave maestra
-    $("unlockBtn").addEventListener("click", () => {
-      masterKey = $("masterKey").value;
-      if (!masterKey) return alert("Debes ingresar la clave maestra para desbloquear Vaul");
-      $("passwordArea").classList.remove("hidden");
-      loadPwds();
-    });
-
-    // Funciones cifrado básico XOR + Base64
-    function encrypt(text) {
-      return btoa(
-        text
-          .split("")
-          .map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ masterKey.charCodeAt(i % masterKey.length)))
-          .join("")
-      );
-    }
-    function decrypt(text) {
-      text = atob(text);
-      return text
-        .split("")
-        .map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ masterKey.charCodeAt(i % masterKey.length)))
-        .join("");
-    }
-
-    // Guardar contraseña
-    $("savePwdBtn").addEventListener("click", () => {
-      const note = $("pwdNote").value.trim();
-      const value = $("pwdValue").value.trim();
-      if (!note || !value) return alert("Completa la descripción y la contraseña");
+    saveBtn.onclick = () => {
+      const note = noteInput.value.trim();
+      const pwd = pwdInput.value.trim();
+      if (!note || !pwd) return alert("Completa descripción y contraseña");
 
       const data = {
         note: encrypt(note),
-        value: encrypt(value),
-        date: new Date().toISOString(),
+        pwd: encrypt(pwd),
+        updated: new Date()
       };
-      db.collection("users").doc(userId).collection("passwords").add(data)
-        .then(() => {
-          $("pwdNote").value = "";
-          $("pwdValue").value = "";
-          loadPwds();
-        })
-        .catch((e) => alert("Error guardando contraseña: " + e.message));
-    });
 
-    // Cargar contraseñas
-    function loadPwds() {
-      const list = $("list");
-      list.innerHTML = "";
-      db.collection("users").doc(userId).collection("passwords")
-        .orderBy("date", "desc")
+      if(editingId){
+        db.collection("users").doc(currentUserId).collection("passwords").doc(editingId).set(data)
+          .then(() => {
+            editingId = null;
+            clearForm();
+            loadPasswords();
+          })
+          .catch(e => alert("Error actualizando: " + e.message));
+      } else {
+        db.collection("users").doc(currentUserId).collection("passwords").add(data)
+          .then(() => {
+            clearForm();
+            loadPasswords();
+          })
+          .catch(e => alert("Error guardando: " + e.message));
+      }
+    };
+
+    function loadPasswords(){
+      listDiv.innerHTML = "Cargando...";
+      db.collection("users").doc(currentUserId).collection("passwords")
+        .orderBy("updated", "desc")
         .get()
-        .then((snapshot) => {
-          snapshot.forEach((doc) => {
-            const d = doc.data();
-            const div = document.createElement("div");
-            div.className = "card";
-            div.innerHTML = `<strong>${decrypt(d.note)}</strong><br>${decrypt(d.value)}`;
-            list.appendChild(div);
+        .then(snapshot => {
+          listDiv.innerHTML = "";
+          if(snapshot.empty){
+            listDiv.innerHTML = "<p>No hay contraseñas guardadas.</p>";
+            return;
+          }
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+              <strong>${decrypt(data.note)}</strong><br/>
+              <em>${decrypt(data.pwd)}</em><br/><br/>
+              <button onclick="editPwd('${doc.id}')">Editar</button>
+              <button onclick="deletePwd('${doc.id}')">Borrar</button>
+            `;
+            listDiv.appendChild(card);
           });
         })
-        .catch((e) => alert("Error cargando contraseñas: " + e.message));
+        .catch(e => alert("Error cargando: " + e.message));
     }
 
-    // Generador de contraseña segura (8 o 4 caracteres)
-    $("genPassBtn").addEventListener("click", () => {
-      let length = prompt("¿Qué longitud quieres para la contraseña? (4 u 8 caracteres)", "8");
-      if (length !== "4" && length !== "8") {
-        alert("Solo puedes elegir 4 u 8 caracteres.");
-        return;
-      }
-      const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
-      let pass = "";
-      for (let i = 0; i < parseInt(length); i++) {
-        pass += charset.charAt(Math.floor(Math.random() * charset.length));
-      }
-      $("pwdValue").value = pass;
-    });
+    function clearForm(){
+      noteInput.value = "";
+      pwdInput.value = "";
+      saveBtn.textContent = "Guardar";
+    }
 
-    // Cambio de idioma - solo cambia título por ahora
-    const translations = {
-      es: { title: "Vaul - Gestor de Contraseñas" },
-      en: { title: "Vaul - Password Manager" },
+    window.editPwd = function(id){
+      db.collection("users").doc(currentUserId).collection("passwords").doc(id).get()
+        .then(doc => {
+          if(!doc.exists) return alert("Contraseña no encontrada");
+          const data = doc.data();
+          noteInput.value = decrypt(data.note);
+          pwdInput.value = decrypt(data.pwd);
+          editingId = id;
+          saveBtn.textContent = "Actualizar";
+        })
+        .catch(e => alert("Error al cargar para editar: " + e.message));
     };
-    $("lang").addEventListener("change", (e) => {
-      const lang = e.target.value;
-      document.title = translations[lang].title;
-      $("title").textContent = translations[lang].title;
-    });
 
+    window.deletePwd = function(id){
+      if(confirm("¿Seguro que quieres borrar esta contraseña?")){
+        db.collection("users").doc(currentUserId).collection("passwords").doc(id).delete()
+          .then(() => loadPasswords())
+          .catch(e => alert("Error borrando: " + e.message));
+      }
+    };
   </script>
 </body>
 </html>
