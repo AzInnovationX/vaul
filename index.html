@@ -4,71 +4,359 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Vaul - Gestor de Contraseñas</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #121212;
-      color: white;
-      max-width: 600px;
-      margin: auto;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
       padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    input, textarea, button {
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 2rem;
       width: 100%;
-      padding: 0.7em;
-      margin: 0.5em 0;
-      border-radius: 6px;
+      max-width: 600px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      color: #333;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      color: #4a5568;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .header .subtitle {
+      color: #718096;
+      font-size: 1.1rem;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #a0aec0;
+      z-index: 1;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #f7fafc;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 1rem;
       border: none;
-      font-size: 1em;
-    }
-    button {
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
-      background: #2d89ef;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
-      font-weight: bold;
-      transition: background 0.3s;
     }
-    button:hover {
-      background: #1b5fbd;
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
     }
+
+    .btn-secondary {
+      background: #f7fafc;
+      color: #4a5568;
+      border: 2px solid #e2e8f0;
+    }
+
+    .btn-secondary:hover {
+      background: #edf2f7;
+      border-color: #cbd5e0;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(245, 101, 101, 0.3);
+    }
+
+    .btn-small {
+      width: auto;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      margin: 0 0.25rem;
+    }
+
     .hidden {
       display: none;
     }
-    .card {
-      background: #1f1f1f;
-      padding: 1em;
-      margin-bottom: 1em;
-      border-radius: 8px;
-      word-wrap: break-word;
+
+    .auth-container {
+      text-align: center;
     }
-    .card button {
-      width: auto;
-      padding: 0.3em 0.6em;
-      margin-right: 0.5em;
-      font-size: 0.9em;
+
+    .main-container {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .section h2 {
+      color: #2d3748;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .password-card {
+      background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      border-left: 4px solid #667eea;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .password-card:hover {
+      transform: translateX(4px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .password-info {
+      margin-bottom: 1rem;
+    }
+
+    .password-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .password-value {
+      background: #4a5568;
+      color: white;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.5px;
+      word-break: break-all;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #48bb78;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #718096;
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #cbd5e0;
+    }
+
+    .user-info {
+      background: #e6fffa;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .user-email {
+      color: #2d3748;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 0;
+        border-radius: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .card-actions {
+        justify-content: center;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Vaul - Gestor de Contraseñas</h1>
+  <div class="container">
+    <div class="header">
+      <h1><i class="fas fa-shield-alt"></i> Vaul</h1>
+      <p class="subtitle">Tu gestor de contraseñas seguro</p>
+    </div>
 
-  <div id="auth">
-    <input type="email" id="email" placeholder="Correo electrónico" />
-    <input type="password" id="password" placeholder="Contraseña" />
-    <button id="loginBtn">Iniciar sesión</button>
-    <button id="registerBtn">Registrar cuenta</button>
-  </div>
+    <div id="auth" class="auth-container">
+      <div class="section">
+        <div class="form-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" placeholder="Correo electrónico" />
+        </div>
+        <div class="form-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" placeholder="Contraseña" />
+        </div>
+        <button id="loginBtn" class="btn btn-primary">
+          <i class="fas fa-sign-in-alt"></i>
+          Iniciar sesión
+        </button>
+        <button id="registerBtn" class="btn btn-secondary">
+          <i class="fas fa-user-plus"></i>
+          Registrar cuenta
+        </button>
+      </div>
+    </div>
 
-  <div id="main" class="hidden">
-    <button id="logoutBtn" style="background:#c82333;">Cerrar sesión</button>
+    <div id="main" class="main-container hidden">
+      <div class="user-info">
+        <span class="user-email">
+          <i class="fas fa-user-circle"></i>
+          <span id="userEmail"></span>
+        </span>
+        <button id="logoutBtn" class="btn btn-danger btn-small">
+          <i class="fas fa-sign-out-alt"></i>
+          Cerrar sesión
+        </button>
+      </div>
 
-    <h2>Guardar / Editar Contraseña</h2>
-    <input type="text" id="note" placeholder="Descripción" />
-    <input type="text" id="pwd" placeholder="Contraseña" />
-    <button id="saveBtn">Guardar</button>
+      <div class="section">
+        <h2>
+          <i class="fas fa-plus-circle"></i>
+          <span id="formTitle">Guardar Nueva Contraseña</span>
+        </h2>
+        <div class="form-group">
+          <i class="fas fa-tag"></i>
+          <input type="text" id="note" placeholder="Descripción (ej: Gmail, Facebook, etc.)" />
+        </div>
+        <div class="form-group">
+          <i class="fas fa-key"></i>
+          <input type="text" id="pwd" placeholder="Contraseña" />
+        </div>
+        <button id="saveBtn" class="btn btn-primary">
+          <i class="fas fa-save"></i>
+          <span id="saveBtnText">Guardar</span>
+        </button>
+        <button id="cancelBtn" class="btn btn-secondary hidden">
+          <i class="fas fa-times"></i>
+          Cancelar
+        </button>
+      </div>
 
-    <h2>Contraseñas guardadas</h2>
-    <div id="list"></div>
+      <div class="section">
+        <h2>
+          <i class="fas fa-list"></i>
+          Contraseñas Guardadas
+        </h2>
+        <div id="list"></div>
+      </div>
+    </div>
   </div>
 
   <!-- Firebase -->
@@ -100,7 +388,11 @@
     const noteInput = document.getElementById("note");
     const pwdInput = document.getElementById("pwd");
     const saveBtn = document.getElementById("saveBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
     const listDiv = document.getElementById("list");
+    const userEmailSpan = document.getElementById("userEmail");
+    const formTitle = document.getElementById("formTitle");
+    const saveBtnText = document.getElementById("saveBtnText");
 
     let currentUserId = null;
     let editingId = null;
@@ -113,47 +405,110 @@
       return atob(text);
     }
 
+    // Función para mostrar toast
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.style.background = type === 'success' ? '#48bb78' : '#f56565';
+      toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'exclamation-triangle'}"></i> ${message}`;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+    // Función para copiar al portapapeles
+    async function copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast('Contraseña copiada al portapapeles');
+      } catch (err) {
+        // Fallback para navegadores más antiguos
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showToast('Contraseña copiada al portapapeles');
+      }
+    }
+
     loginBtn.onclick = () => {
       const email = emailInput.value.trim();
       const password = passwordInput.value.trim();
-      if (!email || !password) return alert("Completa correo y contraseña");
+      if (!email || !password) return showToast("Completa correo y contraseña", 'error');
+      
+      loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Iniciando sesión...';
+      loginBtn.disabled = true;
+      
       auth.signInWithEmailAndPassword(email, password)
-        .catch(e => alert("Error login: " + e.message));
+        .catch(e => {
+          showToast("Error de login: " + e.message, 'error');
+          loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
+          loginBtn.disabled = false;
+        });
     };
 
     registerBtn.onclick = () => {
       const email = emailInput.value.trim();
       const password = passwordInput.value.trim();
-      if (!email || !password) return alert("Completa correo y contraseña");
-      if(password.length < 6) return alert("La contraseña debe tener al menos 6 caracteres");
+      if (!email || !password) return showToast("Completa correo y contraseña", 'error');
+      if(password.length < 6) return showToast("La contraseña debe tener al menos 6 caracteres", 'error');
+      
+      registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creando cuenta...';
+      registerBtn.disabled = true;
+      
       auth.createUserWithEmailAndPassword(email, password)
-        .then(() => alert("Cuenta creada. Ya puedes iniciar sesión"))
-        .catch(e => alert("Error registro: " + e.message));
+        .then(() => {
+          showToast("Cuenta creada exitosamente");
+          registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registrar cuenta';
+          registerBtn.disabled = false;
+        })
+        .catch(e => {
+          showToast("Error de registro: " + e.message, 'error');
+          registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registrar cuenta';
+          registerBtn.disabled = false;
+        });
     };
 
     logoutBtn.onclick = () => {
       auth.signOut();
     };
 
+    cancelBtn.onclick = () => {
+      clearForm();
+    };
+
     auth.onAuthStateChanged(user => {
       if (user) {
         currentUserId = user.uid;
+        userEmailSpan.textContent = user.email;
         authDiv.classList.add("hidden");
         mainDiv.classList.remove("hidden");
         loadPasswords();
+        
+        // Resetear botones de login
+        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
+        loginBtn.disabled = false;
+        registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registrar cuenta';
+        registerBtn.disabled = false;
       } else {
         currentUserId = null;
         authDiv.classList.remove("hidden");
         mainDiv.classList.add("hidden");
         clearForm();
         listDiv.innerHTML = "";
+        emailInput.value = "";
+        passwordInput.value = "";
       }
     });
 
     saveBtn.onclick = () => {
       const note = noteInput.value.trim();
       const pwd = pwdInput.value.trim();
-      if (!note || !pwd) return alert("Completa descripción y contraseña");
+      if (!note || !pwd) return showToast("Completa descripción y contraseña", 'error');
 
       const data = {
         note: encrypt(note),
@@ -161,77 +516,158 @@
         updated: new Date()
       };
 
+      saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+      saveBtn.disabled = true;
+
       if(editingId){
         db.collection("users").doc(currentUserId).collection("passwords").doc(editingId).set(data)
           .then(() => {
-            editingId = null;
+            showToast("Contraseña actualizada exitosamente");
             clearForm();
             loadPasswords();
           })
-          .catch(e => alert("Error actualizando: " + e.message));
+          .catch(e => {
+            showToast("Error actualizando: " + e.message, 'error');
+            saveBtn.innerHTML = '<i class="fas fa-save"></i> Actualizar';
+            saveBtn.disabled = false;
+          });
       } else {
         db.collection("users").doc(currentUserId).collection("passwords").add(data)
           .then(() => {
+            showToast("Contraseña guardada exitosamente");
             clearForm();
             loadPasswords();
           })
-          .catch(e => alert("Error guardando: " + e.message));
+          .catch(e => {
+            showToast("Error guardando: " + e.message, 'error');
+            saveBtn.innerHTML = '<i class="fas fa-save"></i> Guardar';
+            saveBtn.disabled = false;
+          });
       }
     };
 
     function loadPasswords(){
-      listDiv.innerHTML = "Cargando...";
+      listDiv.innerHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin fa-2x"></i><br><br>Cargando contraseñas...</div>';
+      
       db.collection("users").doc(currentUserId).collection("passwords")
         .orderBy("updated", "desc")
         .get()
         .then(snapshot => {
           listDiv.innerHTML = "";
           if(snapshot.empty){
-            listDiv.innerHTML = "<p>No hay contraseñas guardadas.</p>";
+            listDiv.innerHTML = `
+              <div class="empty-state">
+                <i class="fas fa-key"></i>
+                <h3>No hay contraseñas guardadas</h3>
+                <p>Comienza guardando tu primera contraseña</p>
+              </div>
+            `;
             return;
           }
           snapshot.forEach(doc => {
             const data = doc.data();
             const card = document.createElement("div");
-            card.className = "card";
+            card.className = "password-card";
             card.innerHTML = `
-              <strong>${decrypt(data.note)}</strong><br/>
-              <em>${decrypt(data.pwd)}</em><br/><br/>
-              <button onclick="editPwd('${doc.id}')">Editar</button>
-              <button onclick="deletePwd('${doc.id}')">Borrar</button>
+              <div class="password-info">
+                <div class="password-title">
+                  <i class="fas fa-tag"></i>
+                  ${decrypt(data.note)}
+                </div>
+                <div class="password-value">
+                  <span style="flex: 1;">${decrypt(data.pwd)}</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <button onclick="copyPassword('${doc.id}')" class="btn btn-secondary btn-small">
+                  <i class="fas fa-copy"></i>
+                  Copiar
+                </button>
+                <button onclick="editPwd('${doc.id}')" class="btn btn-primary btn-small">
+                  <i class="fas fa-edit"></i>
+                  Editar
+                </button>
+                <button onclick="deletePwd('${doc.id}')" class="btn btn-danger btn-small">
+                  <i class="fas fa-trash"></i>
+                  Eliminar
+                </button>
+              </div>
             `;
             listDiv.appendChild(card);
           });
         })
-        .catch(e => alert("Error cargando: " + e.message));
+        .catch(e => {
+          listDiv.innerHTML = '<div style="text-align: center; color: #f56565; padding: 2rem;">Error cargando contraseñas</div>';
+          showToast("Error cargando: " + e.message, 'error');
+        });
     }
 
     function clearForm(){
       noteInput.value = "";
       pwdInput.value = "";
-      saveBtn.textContent = "Guardar";
+      editingId = null;
+      formTitle.textContent = "Guardar Nueva Contraseña";
+      saveBtnText.textContent = "Guardar";
+      saveBtn.innerHTML = '<i class="fas fa-save"></i> Guardar';
+      saveBtn.disabled = false;
+      cancelBtn.classList.add("hidden");
     }
+
+    window.copyPassword = function(id){
+      db.collection("users").doc(currentUserId).collection("passwords").doc(id).get()
+        .then(doc => {
+          if(!doc.exists) return showToast("Contraseña no encontrada", 'error');
+          const data = doc.data();
+          copyToClipboard(decrypt(data.pwd));
+        })
+        .catch(e => showToast("Error al copiar: " + e.message, 'error'));
+    };
 
     window.editPwd = function(id){
       db.collection("users").doc(currentUserId).collection("passwords").doc(id).get()
         .then(doc => {
-          if(!doc.exists) return alert("Contraseña no encontrada");
+          if(!doc.exists) return showToast("Contraseña no encontrada", 'error');
           const data = doc.data();
           noteInput.value = decrypt(data.note);
           pwdInput.value = decrypt(data.pwd);
           editingId = id;
-          saveBtn.textContent = "Actualizar";
+          formTitle.textContent = "Editar Contraseña";
+          saveBtnText.textContent = "Actualizar";
+          cancelBtn.classList.remove("hidden");
+          
+          // Scroll suave hacia el formulario
+          document.querySelector('.section').scrollIntoView({ behavior: 'smooth' });
         })
-        .catch(e => alert("Error al cargar para editar: " + e.message));
+        .catch(e => showToast("Error al cargar para editar: " + e.message, 'error'));
     };
 
     window.deletePwd = function(id){
-      if(confirm("¿Seguro que quieres borrar esta contraseña?")){
+      if(confirm("¿Estás seguro de que quieres eliminar esta contraseña? Esta acción no se puede deshacer.")){
         db.collection("users").doc(currentUserId).collection("passwords").doc(id).delete()
-          .then(() => loadPasswords())
-          .catch(e => alert("Error borrando: " + e.message));
+          .then(() => {
+            showToast("Contraseña eliminada exitosamente");
+            loadPasswords();
+          })
+          .catch(e => showToast("Error eliminando: " + e.message, 'error'));
       }
     };
+
+    // Permitir submit con Enter
+    emailInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') loginBtn.click();
+    });
+    
+    passwordInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') loginBtn.click();
+    });
+    
+    noteInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') pwdInput.focus();
+    });
+    
+    pwdInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') saveBtn.click();
+    });
   </script>
 </body>
 </html>
