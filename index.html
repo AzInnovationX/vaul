@@ -128,6 +128,23 @@
       box-shadow: 0 10px 20px rgba(245, 101, 101, 0.3);
     }
 
+    .btn-link {
+      background: none;
+      color: #667eea;
+      text-decoration: underline;
+      font-size: 0.9rem;
+      padding: 0.5rem;
+      margin: 0;
+      width: auto;
+    }
+
+    .btn-link:hover {
+      color: #764ba2;
+      background: none;
+      transform: none;
+      box-shadow: none;
+    }
+
     .btn-small {
       width: auto;
       padding: 0.5rem 1rem;
@@ -266,6 +283,41 @@
       gap: 0.5rem;
     }
 
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #667eea;
+      text-decoration: none;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .back-link:hover {
+      color: #764ba2;
+    }
+
+    .recovery-info {
+      background: #f0f8ff;
+      border: 2px solid #e6f3ff;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .recovery-info i {
+      font-size: 2rem;
+      color: #667eea;
+      margin-bottom: 0.5rem;
+    }
+
+    .recovery-info p {
+      color: #4a5568;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
     @media (max-width: 768px) {
       .container {
         margin: 0;
@@ -293,6 +345,7 @@
       <p class="subtitle">Tu gestor de contraseñas seguro</p>
     </div>
 
+    <!-- Pantalla de Login -->
     <div id="auth" class="auth-container">
       <div class="section">
         <div class="form-group">
@@ -311,9 +364,40 @@
           <i class="fas fa-user-plus"></i>
           Registrar cuenta
         </button>
+        <button id="forgotPasswordBtn" class="btn btn-link">
+          <i class="fas fa-question-circle"></i>
+          ¿Olvidaste tu contraseña?
+        </button>
       </div>
     </div>
 
+    <!-- Pantalla de Recuperación de Contraseña -->
+    <div id="recovery" class="auth-container hidden">
+      <div class="section">
+        <a href="#" id="backToLogin" class="back-link">
+          <i class="fas fa-arrow-left"></i>
+          Volver al inicio de sesión
+        </a>
+        
+        <div class="recovery-info">
+          <i class="fas fa-envelope-open-text"></i>
+          <h3 style="margin-bottom: 0.5rem; color: #2d3748;">Recuperar Contraseña</h3>
+          <p>Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
+        </div>
+
+        <div class="form-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="recoveryEmail" placeholder="Correo electrónico registrado" />
+        </div>
+        
+        <button id="sendRecoveryBtn" class="btn btn-primary">
+          <i class="fas fa-paper-plane"></i>
+          Enviar enlace de recuperación
+        </button>
+      </div>
+    </div>
+
+    <!-- Pantalla Principal -->
     <div id="main" class="main-container hidden">
       <div class="user-info">
         <span class="user-email">
@@ -378,13 +462,19 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
+    // Elementos del DOM
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
     const loginBtn = document.getElementById("loginBtn");
     const registerBtn = document.getElementById("registerBtn");
+    const forgotPasswordBtn = document.getElementById("forgotPasswordBtn");
     const logoutBtn = document.getElementById("logoutBtn");
     const mainDiv = document.getElementById("main");
     const authDiv = document.getElementById("auth");
+    const recoveryDiv = document.getElementById("recovery");
+    const recoveryEmailInput = document.getElementById("recoveryEmail");
+    const sendRecoveryBtn = document.getElementById("sendRecoveryBtn");
+    const backToLoginBtn = document.getElementById("backToLogin");
     const noteInput = document.getElementById("note");
     const pwdInput = document.getElementById("pwd");
     const saveBtn = document.getElementById("saveBtn");
@@ -435,6 +525,83 @@
       }
     }
 
+    // Función para mostrar/ocultar pantallas
+    function showScreen(screen) {
+      authDiv.classList.add('hidden');
+      recoveryDiv.classList.add('hidden');
+      mainDiv.classList.add('hidden');
+      
+      if (screen === 'auth') {
+        authDiv.classList.remove('hidden');
+      } else if (screen === 'recovery') {
+        recoveryDiv.classList.remove('hidden');
+      } else if (screen === 'main') {
+        mainDiv.classList.remove('hidden');
+      }
+    }
+
+    // Event Listeners para navegación
+    forgotPasswordBtn.onclick = () => {
+      showScreen('recovery');
+      recoveryEmailInput.value = emailInput.value; // Pre-llenar con el email si existe
+    };
+
+    backToLoginBtn.onclick = (e) => {
+      e.preventDefault();
+      showScreen('auth');
+    };
+
+    // Función de recuperación de contraseña
+    sendRecoveryBtn.onclick = () => {
+      const email = recoveryEmailInput.value.trim();
+      if (!email) {
+        showToast("Por favor ingresa tu correo electrónico", 'error');
+        return;
+      }
+
+      // Validar formato de email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showToast("Por favor ingresa un correo electrónico válido", 'error');
+        return;
+      }
+
+      sendRecoveryBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+      sendRecoveryBtn.disabled = true;
+
+      auth.sendPasswordResetEmail(email)
+        .then(() => {
+          showToast("Enlace de recuperación enviado. Revisa tu correo electrónico.");
+          showScreen('auth');
+          recoveryEmailInput.value = '';
+        })
+        .catch((error) => {
+          let errorMessage = "Error al enviar el enlace de recuperación";
+          
+          // Personalizar mensajes de error
+          switch (error.code) {
+            case 'auth/user-not-found':
+              errorMessage = "No existe una cuenta con este correo electrónico";
+              break;
+            case 'auth/invalid-email':
+              errorMessage = "El correo electrónico no es válido";
+              break;
+            case 'auth/too-many-requests':
+              errorMessage = "Demasiados intentos. Intenta de nuevo más tarde";
+              break;
+            default:
+              errorMessage = error.message;
+          }
+          
+          showToast(errorMessage, 'error');
+        })
+        .finally(() => {
+          sendRecoveryBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar enlace de recuperación';
+          sendRecoveryBtn.disabled = false;
+        });
+    };
+
+    // Login function
     loginBtn.onclick = () => {
       const email = emailInput.value.trim();
       const password = passwordInput.value.trim();
@@ -445,7 +612,29 @@
       
       auth.signInWithEmailAndPassword(email, password)
         .catch(e => {
-          showToast("Error de login: " + e.message, 'error');
+          let errorMessage = "Error de inicio de sesión";
+          
+          switch (e.code) {
+            case 'auth/user-not-found':
+              errorMessage = "No existe una cuenta con este correo electrónico";
+              break;
+            case 'auth/wrong-password':
+              errorMessage = "Contraseña incorrecta";
+              break;
+            case 'auth/invalid-email':
+              errorMessage = "El correo electrónico no es válido";
+              break;
+            case 'auth/user-disabled':
+              errorMessage = "Esta cuenta ha sido deshabilitada";
+              break;
+            case 'auth/too-many-requests':
+              errorMessage = "Demasiados intentos fallidos. Intenta más tarde";
+              break;
+            default:
+              errorMessage = e.message;
+          }
+          
+          showToast(errorMessage, 'error');
           loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
           loginBtn.disabled = false;
         });
@@ -467,7 +656,23 @@
           registerBtn.disabled = false;
         })
         .catch(e => {
-          showToast("Error de registro: " + e.message, 'error');
+          let errorMessage = "Error al crear la cuenta";
+          
+          switch (e.code) {
+            case 'auth/email-already-in-use':
+              errorMessage = "Ya existe una cuenta con este correo electrónico";
+              break;
+            case 'auth/invalid-email':
+              errorMessage = "El correo electrónico no es válido";
+              break;
+            case 'auth/weak-password':
+              errorMessage = "La contraseña es muy débil";
+              break;
+            default:
+              errorMessage = e.message;
+          }
+          
+          showToast(errorMessage, 'error');
           registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registrar cuenta';
           registerBtn.disabled = false;
         });
@@ -485,8 +690,7 @@
       if (user) {
         currentUserId = user.uid;
         userEmailSpan.textContent = user.email;
-        authDiv.classList.add("hidden");
-        mainDiv.classList.remove("hidden");
+        showScreen('main');
         loadPasswords();
         
         // Resetear botones de login
@@ -496,12 +700,12 @@
         registerBtn.disabled = false;
       } else {
         currentUserId = null;
-        authDiv.classList.remove("hidden");
-        mainDiv.classList.add("hidden");
+        showScreen('auth');
         clearForm();
         listDiv.innerHTML = "";
         emailInput.value = "";
         passwordInput.value = "";
+        recoveryEmailInput.value = "";
       }
     });
 
@@ -659,6 +863,10 @@
     
     passwordInput.addEventListener('keypress', function(e) {
       if (e.key === 'Enter') loginBtn.click();
+    });
+    
+    recoveryEmailInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') sendRecoveryBtn.click();
     });
     
     noteInput.addEventListener('keypress', function(e) {
