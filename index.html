@@ -3,358 +3,426 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vaul - Gestor de Contraseñas</title>
+  <title>Vault - Gestor de Contraseñas</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+      --bg-gradient: linear-gradient(135deg, #0a0a0f 0%, #0f0f1e 25%, #1a1a3e 50%, #2d1b69 100%);
+      --glass-bg: rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.13);
+      --input-glass-bg: rgba(24,24,48,0.7);
+      --input-glass-border: #312e81;
+      --text-primary: #fff;
+      --text-secondary: #a5b4fc;
+      --text-muted: #64748b;
+      --accent-purple: #a855f7;
+      --accent-blue: #6366f1;
+      --success-green: #10b981;
+      --danger: #ef4444;
+      --border-radius: 18px;
+      --duration: .32s;
+      --shadow-main: 0 8px 32px 0 #8b5cf650;
+      --shadow-card: 0 2px 8px 0 #a855f740;
     }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
       min-height: 100vh;
-      padding: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      letter-spacing: 0.01em;
     }
-
+    body {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed; top:0; left:0; width:100vw; height:100vh;
+      background: 
+          radial-gradient(circle at 20% 20%, rgba(139,92,246,0.13) 0, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(59,130,246,0.13) 0, transparent 50%),
+          radial-gradient(circle at 40% 60%, rgba(168,85,247,0.08) 0, transparent 50%);
+      z-index: -2;
+      pointer-events: none;
+      animation: backgroundShift 20s ease-in-out infinite;
+    }
+    @keyframes backgroundShift {
+      0%,100% { transform: translateX(0) translateY(0);}
+      25% { transform: translateX(-2%) translateY(-1%);}
+      50% { transform: translateX(1%) translateY(2%);}
+      75% { transform: translateX(-1%) translateY(-2%);}
+    }
     .container {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 2rem;
+      background: var(--glass-bg);
+      border-radius: var(--border-radius);
+      padding: 2.3rem 1.6rem 2.6rem 1.6rem;
       width: 100%;
-      max-width: 600px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      color: #333;
+      max-width: 410px;
+      box-shadow: var(--shadow-main);
+      margin: 2.5rem 0;
+      border: 1.5px solid var(--glass-border);
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+      border-top: 2.5px solid #a855f7;
+      border-bottom: 2.5px solid #6366f1;
     }
-
     .header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.6rem;
     }
-
     .header h1 {
-      color: #4a5568;
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      margin-bottom: .18rem;
+      letter-spacing: -0.03em;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex; align-items: center; justify-content: center; gap: .65rem;
+      text-shadow: 0 2px 18px #a855f760;
     }
-
     .header .subtitle {
-      color: #718096;
+      color: var(--text-secondary);
+      font-weight: 600;
       font-size: 1.1rem;
+      letter-spacing: .1em;
     }
-
+    .section {
+      background: var(--input-glass-bg);
+      border-radius: var(--border-radius);
+      padding: 1.6rem 1rem;
+      margin-bottom: 1.7rem;
+      box-shadow: var(--shadow-card);
+      border: 1.5px solid var(--glass-border);
+      animation: fadeIn .35s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .section h2 {
+      color: var(--accent-purple);
+      font-family: inherit;
+      font-size: 1.08rem;
+      letter-spacing: .07em;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-weight: 800;
+      text-shadow: 0 2px 10px #a855f735;
+    }
     .form-group {
       position: relative;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.4rem;
     }
-
     .form-group i {
       position: absolute;
-      left: 1rem;
-      top: 50%;
+      left: .9rem; top: 50%;
       transform: translateY(-50%);
-      color: #a0aec0;
-      z-index: 1;
+      color: var(--accent-purple);
+      font-size: 1.1rem;
+      pointer-events: none;
+      opacity: .7;
     }
-
     input, textarea {
       width: 100%;
-      padding: 1rem 1rem 1rem 3rem;
-      border: 2px solid #e2e8f0;
+      padding: 1rem 1rem 1rem 2.5rem;
       border-radius: 12px;
       font-size: 1rem;
-      transition: all 0.3s ease;
-      background: #f7fafc;
-    }
-
-    input:focus, textarea:focus {
+      background: var(--glass-bg);
+      color: var(--text-primary);
+      border: 1.5px solid var(--input-glass-border);
       outline: none;
-      border-color: #667eea;
-      background: white;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      transition: border var(--duration), box-shadow var(--duration), background var(--duration);
+      box-shadow: 0 1px 6px 0 #a855f710;
+      letter-spacing: 0.1px;
+      caret-color: var(--accent-purple);
+      font-family: inherit;
     }
-
+    input:focus, textarea:focus {
+      border-color: var(--accent-blue);
+      background: rgba(59, 130, 246, 0.07);
+      box-shadow: 0 0 0 2px #6366f1bb;
+    }
+    ::placeholder { color: #a5b4fcbb; }
     .btn {
       width: 100%;
       padding: 1rem;
       border: none;
       border-radius: 12px;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background var(--duration), color var(--duration), box-shadow var(--duration), transform var(--duration);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: .6rem;
       margin-bottom: 1rem;
+      letter-spacing: 1px;
+      font-family: inherit;
+      box-shadow: 0 2px 8px 0 #a855f715;
     }
-
     .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      background: var(--primary-gradient);
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      box-shadow: 0 6px 16px 0 #a855f770;
     }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    .btn-primary:hover, .btn-primary:focus {
+      background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+      box-shadow: 0 8px 24px 0 #6366f170;
+      transform: translateY(-2px) scale(1.015);
     }
-
     .btn-secondary {
-      background: #f7fafc;
-      color: #4a5568;
-      border: 2px solid #e2e8f0;
+      background: rgba(139,92,246,0.08);
+      color: var(--text-secondary);
+      border: 1.5px solid var(--accent-purple);
     }
-
-    .btn-secondary:hover {
-      background: #edf2f7;
-      border-color: #cbd5e0;
+    .btn-secondary:hover, .btn-secondary:focus {
+      background: rgba(99,102,241,0.13);
+      color: var(--accent-blue);
+      border-color: var(--accent-blue);
     }
-
     .btn-danger {
-      background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
-      color: white;
+      background: linear-gradient(90deg,#ef4444 0%,#8b5cf6 100%);
+      color: #fff;
+      box-shadow: 0 2px 8px 0 #ef444450;
     }
-
-    .btn-danger:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(245, 101, 101, 0.3);
+    .btn-danger:hover, .btn-danger:focus {
+      background: linear-gradient(90deg, #8b5cf6 0%, #ef4444 100%);
+      color: #fff;
+      box-shadow: 0 4px 14px 0 #ef444470;
+      transform: translateY(-2px) scale(1.015);
     }
-
     .btn-link {
       background: none;
-      color: #667eea;
+      color: var(--accent-blue);
       text-decoration: underline;
-      font-size: 0.9rem;
-      padding: 0.5rem;
+      font-size: .98rem;
+      padding: .6rem 0;
       margin: 0;
       width: auto;
-    }
-
-    .btn-link:hover {
-      color: #764ba2;
-      background: none;
-      transform: none;
+      justify-content: flex-start;
       box-shadow: none;
     }
-
+    .btn-link:hover, .btn-link:focus {
+      color: var(--accent-purple);
+      background: none;
+      box-shadow: none;
+      transform: none;
+    }
     .btn-small {
       width: auto;
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
-      margin: 0 0.25rem;
+      padding: .45rem 1.1rem;
+      font-size: .98rem;
+      margin: 0 .18rem;
     }
-
-    .hidden {
-      display: none;
-    }
-
-    .auth-container {
-      text-align: center;
-    }
-
-    .main-container {
-      animation: fadeIn 0.5s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .section {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
-
-    .section h2 {
-      color: #2d3748;
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .password-card {
-      background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      border-radius: 12px;
-      border-left: 4px solid #667eea;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .password-card:hover {
-      transform: translateX(4px);
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .password-info {
-      margin-bottom: 1rem;
-    }
-
-    .password-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #2d3748;
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .password-value {
-      background: #4a5568;
-      color: white;
-      padding: 0.75rem;
+    .hidden { display: none !important; }
+    .auth-container { text-align: center; }
+    .main-container { animation: fadeIn .5s cubic-bezier(.4,0,.2,1);}
+    .user-info {
+      background: rgba(139,92,246,0.09);
       border-radius: 8px;
-      font-family: 'Courier New', monospace;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .8rem 1.1rem;
+      border: 1.5px solid #312e81;
+      color: var(--text-secondary);
+      font-size: 1.06rem;
+      font-family: inherit;
+    }
+    .user-email {
+      color: var(--accent-purple);
+      font-weight: 700;
+      gap: .6rem;
+      display: flex;
+      align-items: center;
+      font-size: 1.05rem;
+      letter-spacing: 1px;
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      color: var(--accent-blue);
+      text-decoration: none;
+      margin-bottom: .9rem;
+      font-size: .97rem;
+      transition: color var(--duration);
+    }
+    .back-link:hover, .back-link:focus { color: var(--accent-purple);}
+    .recovery-info {
+      background: rgba(99,102,241,0.08);
+      border: 1.5px solid var(--accent-purple);
+      border-radius: 8px;
+      padding: 1rem 1rem .9rem 1rem;
+      margin-bottom: 1.3rem;
+      text-align: center;
+      animation: fadeIn .4s cubic-bezier(.4,0,.2,1);
+      box-shadow: 0 2px 8px 0 #a855f715;
+    }
+    .recovery-info i {
+      font-size: 1.7rem;
+      color: var(--accent-purple);
+      margin-bottom: .5rem;
+      text-shadow: 0 1px 10px #a855f770;
+    }
+    .recovery-info h3 {
+      color: var(--accent-purple);
+      font-size: 1.1rem;
+      margin-bottom: .3rem;
+      font-weight: 800;
+    }
+    .recovery-info p {
+      color: var(--text-muted);
+      font-size: .93rem;
+      line-height: 1.4;
+    }
+    .password-card {
+      background: var(--glass-bg);
+      border-left: 4px solid var(--accent-purple);
+      border-radius: 11px;
+      padding: 1.15rem 1.1rem 1.1rem 1.2rem;
+      margin-bottom: 1.1rem;
+      transition: box-shadow var(--duration), transform .20s cubic-bezier(.53,1.5,.53,1), border-color var(--duration);
+      position: relative;
+      box-shadow: 0 2px 9px 0 #a855f740;
+      cursor: pointer;
+      overflow: hidden;
+      will-change: transform,box-shadow;
+    }
+    .password-card:hover, .password-card:focus-within {
+      transform: translateY(-2px) scale(1.015);
+      border-color: var(--accent-blue);
+      box-shadow: 0 6px 20px 0 #6366f133;
+    }
+    .password-info { margin-bottom: .7rem; }
+    .password-title {
+      font-size: 1.03rem;
+      color: var(--accent-purple);
+      margin-bottom: 0.46rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      letter-spacing: .7px;
+      font-weight: 800;
+      text-shadow: 0 1px 6px #a855f733;
+    }
+    .password-value {
+      background: #18181b;
+      color: #a5b4fc;
+      padding: .62rem .85rem;
+      border-radius: 7px;
+      font-family: 'Fira Mono', 'Courier New', monospace;
       letter-spacing: 0.5px;
       word-break: break-all;
       position: relative;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-size: 1.01rem;
+      border: 1px solid #312e81;
+      box-shadow: 0 0px 8px 0 #6366f140;
+      transition: box-shadow var(--duration);
+      user-select: all;
+      cursor: pointer;
     }
-
+    .password-value:hover { box-shadow: 0 0px 20px 0 #6366f1bb; color: var(--accent-purple);}
     .card-actions {
       display: flex;
-      gap: 0.5rem;
+      gap: .3rem;
       flex-wrap: wrap;
     }
-
-    .toast {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: #48bb78;
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      z-index: 1000;
-      animation: slideIn 0.3s ease;
-    }
-
-    @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
+    .card-actions .btn-small { margin-bottom: 0; }
     .empty-state {
       text-align: center;
-      padding: 3rem 1rem;
-      color: #718096;
+      padding: 2.5rem 0.7rem 2.1rem 0.7rem;
+      color: var(--text-muted);
+      font-size: 1.09rem;
+      opacity: 0.85;
     }
-
     .empty-state i {
-      font-size: 3rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
-      color: #cbd5e0;
+      color: var(--input-glass-border);
+      filter: drop-shadow(0 2px 12px #a855f750);
     }
-
-    .user-info {
-      background: #e6fffa;
-      padding: 1rem;
+    .toast {
+      position: fixed;
+      top: 24px;
+      right: 4vw;
+      background: var(--primary-gradient);
+      color: #fff;
+      padding: .95rem 1.4rem;
       border-radius: 8px;
-      margin-bottom: 1rem;
+      box-shadow: 0 4px 18px 0 #a855f760;
+      z-index: 1000;
+      font-size: 1rem;
+      font-weight: 700;
+      border: 2px solid #a855f7;
+      animation: slideIn .33s cubic-bezier(.4,0,.2,1);
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: .8rem;
+      letter-spacing: 1px;
     }
-
-    .user-email {
-      color: #2d3748;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    .toast.error {
+      background: linear-gradient(90deg, #ef4444 70%, #a855f7 100%);
+      color: #fff;
+      border-color: #ef4444;
+      box-shadow: 0 4px 20px 0 #ef444450;
     }
-
-    .back-link {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #667eea;
-      text-decoration: none;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
+    @keyframes slideIn {
+      from { transform: translateX(100vw) scale(.97); opacity: 0; }
+      to   { transform: translateX(0) scale(1); opacity: 1;}
     }
-
-    .back-link:hover {
-      color: #764ba2;
-    }
-
-    .recovery-info {
-      background: #f0f8ff;
-      border: 2px solid #e6f3ff;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    .recovery-info i {
-      font-size: 2rem;
-      color: #667eea;
-      margin-bottom: 0.5rem;
-    }
-
-    .recovery-info p {
-      color: #4a5568;
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-
-    @media (max-width: 768px) {
+    @media (max-width: 650px) {
       .container {
-        margin: 0;
+        padding: 1.15rem 0.3rem 2.2rem 0.3rem;
+        max-width: 99vw;
         border-radius: 0;
         min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        box-shadow: none;
       }
-
-      .header h1 {
-        font-size: 2rem;
-      }
-
-      .card-actions {
-        justify-content: center;
-      }
+      .header h1 { font-size: 1.5rem; }
+      .section { padding: 1.1rem 0.2rem; }
+      .btn { font-size: .98rem; }
+      .form-group i { font-size: .98rem; }
+      .user-info { font-size: .98rem; padding: .65rem .6rem; }
+      .empty-state { font-size: .99rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1><i class="fas fa-shield-alt"></i> Vaul</h1>
-      <p class="subtitle">Tu gestor de contraseñas seguro</p>
+      <h1><i class="fas fa-shield-alt"></i> Vault</h1>
+      <div class="subtitle">Gestor de Contraseñas Seguro</div>
     </div>
-
     <!-- Pantalla de Login -->
     <div id="auth" class="auth-container">
       <div class="section">
         <div class="form-group">
           <i class="fas fa-envelope"></i>
-          <input type="email" id="email" placeholder="Correo electrónico" />
+          <input type="email" id="email" autocomplete="username" spellcheck="false" placeholder="Correo electrónico" />
         </div>
         <div class="form-group">
           <i class="fas fa-lock"></i>
-          <input type="password" id="password" placeholder="Contraseña" />
+          <input type="password" id="password" autocomplete="current-password" placeholder="Contraseña" />
         </div>
         <button id="loginBtn" class="btn btn-primary">
           <i class="fas fa-sign-in-alt"></i>
@@ -370,7 +438,6 @@
         </button>
       </div>
     </div>
-
     <!-- Pantalla de Recuperación de Contraseña -->
     <div id="recovery" class="auth-container hidden">
       <div class="section">
@@ -378,25 +445,21 @@
           <i class="fas fa-arrow-left"></i>
           Volver al inicio de sesión
         </a>
-        
         <div class="recovery-info">
           <i class="fas fa-envelope-open-text"></i>
-          <h3 style="margin-bottom: 0.5rem; color: #2d3748;">Recuperar Contraseña</h3>
+          <h3>Recuperar Contraseña</h3>
           <p>Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
         </div>
-
         <div class="form-group">
           <i class="fas fa-envelope"></i>
-          <input type="email" id="recoveryEmail" placeholder="Correo electrónico registrado" />
+          <input type="email" id="recoveryEmail" autocomplete="username" placeholder="Correo electrónico registrado" />
         </div>
-        
         <button id="sendRecoveryBtn" class="btn btn-primary">
           <i class="fas fa-paper-plane"></i>
           Enviar enlace de recuperación
         </button>
       </div>
     </div>
-
     <!-- Pantalla Principal -->
     <div id="main" class="main-container hidden">
       <div class="user-info">
@@ -409,7 +472,6 @@
           Cerrar sesión
         </button>
       </div>
-
       <div class="section">
         <h2>
           <i class="fas fa-plus-circle"></i>
@@ -417,11 +479,11 @@
         </h2>
         <div class="form-group">
           <i class="fas fa-tag"></i>
-          <input type="text" id="note" placeholder="Descripción (ej: Gmail, Facebook, etc.)" />
+          <input type="text" id="note" autocomplete="off" spellcheck="false" maxlength="50" placeholder="Descripción (ej: Gmail, Facebook, etc.)" />
         </div>
         <div class="form-group">
           <i class="fas fa-key"></i>
-          <input type="text" id="pwd" placeholder="Contraseña" />
+          <input type="text" id="pwd" autocomplete="off" spellcheck="false" maxlength="80" placeholder="Contraseña" />
         </div>
         <button id="saveBtn" class="btn btn-primary">
           <i class="fas fa-save"></i>
@@ -432,7 +494,6 @@
           Cancelar
         </button>
       </div>
-
       <div class="section">
         <h2>
           <i class="fas fa-list"></i>
@@ -442,13 +503,12 @@
       </div>
     </div>
   </div>
-
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
   <script>
+    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyDyk6XjQ72k73oza9fkkUxup9GQvDsFT5o",
       authDomain: "weatherwise-aywzg.firebaseapp.com",
@@ -457,12 +517,11 @@
       messagingSenderId: "699516071771",
       appId: "1:699516071771:web:43f9af033fbad8a738b47e"
     };
-
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // Elementos del DOM
+    // DOM Elements
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
     const loginBtn = document.getElementById("loginBtn");
@@ -487,34 +546,30 @@
     let currentUserId = null;
     let editingId = null;
 
-    // Simple cifrado base64 (para evitar texto plano)
+    // Cifrado base64 (solo ofuscación)
     function encrypt(text) {
-      return btoa(text);
+      return btoa(unescape(encodeURIComponent(text)));
     }
     function decrypt(text) {
-      return atob(text);
+      try { return decodeURIComponent(escape(atob(text))); }
+      catch { return ""; }
     }
 
-    // Función para mostrar toast
     function showToast(message, type = 'success') {
       const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.style.background = type === 'success' ? '#48bb78' : '#f56565';
+      toast.className = 'toast' + (type === 'error' ? ' error' : '');
       toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'exclamation-triangle'}"></i> ${message}`;
       document.body.appendChild(toast);
-      
-      setTimeout(() => {
-        toast.remove();
-      }, 3000);
+      setTimeout(() => { toast.style.opacity = 0; }, 2600);
+      setTimeout(() => { toast.remove(); }, 3100);
     }
 
-    // Función para copiar al portapapeles
     async function copyToClipboard(text) {
       try {
         await navigator.clipboard.writeText(text);
         showToast('Contraseña copiada al portapapeles');
       } catch (err) {
-        // Fallback para navegadores más antiguos
+        // Fallback legacy
         const textArea = document.createElement('textarea');
         textArea.value = text;
         document.body.appendChild(textArea);
@@ -525,25 +580,19 @@
       }
     }
 
-    // Función para mostrar/ocultar pantallas
     function showScreen(screen) {
       authDiv.classList.add('hidden');
       recoveryDiv.classList.add('hidden');
       mainDiv.classList.add('hidden');
-      
-      if (screen === 'auth') {
-        authDiv.classList.remove('hidden');
-      } else if (screen === 'recovery') {
-        recoveryDiv.classList.remove('hidden');
-      } else if (screen === 'main') {
-        mainDiv.classList.remove('hidden');
-      }
+      if (screen === 'auth') authDiv.classList.remove('hidden');
+      else if (screen === 'recovery') recoveryDiv.classList.remove('hidden');
+      else if (screen === 'main') mainDiv.classList.remove('hidden');
     }
 
-    // Event Listeners para navegación
     forgotPasswordBtn.onclick = () => {
       showScreen('recovery');
-      recoveryEmailInput.value = emailInput.value; // Pre-llenar con el email si existe
+      recoveryEmailInput.value = emailInput.value;
+      setTimeout(() => recoveryEmailInput.focus(), 220);
     };
 
     backToLoginBtn.onclick = (e) => {
@@ -551,24 +600,13 @@
       showScreen('auth');
     };
 
-    // Función de recuperación de contraseña
     sendRecoveryBtn.onclick = () => {
       const email = recoveryEmailInput.value.trim();
-      if (!email) {
-        showToast("Por favor ingresa tu correo electrónico", 'error');
-        return;
-      }
-
-      // Validar formato de email
+      if (!email) return showToast("Por favor ingresa tu correo electrónico", 'error');
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        showToast("Por favor ingresa un correo electrónico válido", 'error');
-        return;
-      }
-
+      if (!emailRegex.test(email)) return showToast("Por favor ingresa un correo electrónico válido", 'error');
       sendRecoveryBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
       sendRecoveryBtn.disabled = true;
-
       auth.sendPasswordResetEmail(email)
         .then(() => {
           showToast("Enlace de recuperación enviado. Revisa tu correo electrónico.");
@@ -577,22 +615,12 @@
         })
         .catch((error) => {
           let errorMessage = "Error al enviar el enlace de recuperación";
-          
-          // Personalizar mensajes de error
           switch (error.code) {
-            case 'auth/user-not-found':
-              errorMessage = "No existe una cuenta con este correo electrónico";
-              break;
-            case 'auth/invalid-email':
-              errorMessage = "El correo electrónico no es válido";
-              break;
-            case 'auth/too-many-requests':
-              errorMessage = "Demasiados intentos. Intenta de nuevo más tarde";
-              break;
-            default:
-              errorMessage = error.message;
+            case 'auth/user-not-found': errorMessage = "No existe una cuenta con este correo electrónico"; break;
+            case 'auth/invalid-email': errorMessage = "El correo electrónico no es válido"; break;
+            case 'auth/too-many-requests': errorMessage = "Demasiados intentos. Intenta de nuevo más tarde"; break;
+            default: errorMessage = error.message;
           }
-          
           showToast(errorMessage, 'error');
         })
         .finally(() => {
@@ -601,39 +629,22 @@
         });
     };
 
-    // Login function
     loginBtn.onclick = () => {
       const email = emailInput.value.trim();
       const password = passwordInput.value.trim();
       if (!email || !password) return showToast("Completa correo y contraseña", 'error');
-      
-      loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Iniciando sesión...';
-      loginBtn.disabled = true;
-      
+      loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Iniciando sesión...'; loginBtn.disabled = true;
       auth.signInWithEmailAndPassword(email, password)
         .catch(e => {
           let errorMessage = "Error de inicio de sesión";
-          
           switch (e.code) {
-            case 'auth/user-not-found':
-              errorMessage = "No existe una cuenta con este correo electrónico";
-              break;
-            case 'auth/wrong-password':
-              errorMessage = "Contraseña incorrecta";
-              break;
-            case 'auth/invalid-email':
-              errorMessage = "El correo electrónico no es válido";
-              break;
-            case 'auth/user-disabled':
-              errorMessage = "Esta cuenta ha sido deshabilitada";
-              break;
-            case 'auth/too-many-requests':
-              errorMessage = "Demasiados intentos fallidos. Intenta más tarde";
-              break;
-            default:
-              errorMessage = e.message;
+            case 'auth/user-not-found': errorMessage = "No existe una cuenta con este correo electrónico"; break;
+            case 'auth/wrong-password': errorMessage = "Contraseña incorrecta"; break;
+            case 'auth/invalid-email': errorMessage = "El correo electrónico no es válido"; break;
+            case 'auth/user-disabled': errorMessage = "Esta cuenta ha sido deshabilitada"; break;
+            case 'auth/too-many-requests': errorMessage = "Demasiados intentos fallidos. Intenta más tarde"; break;
+            default: errorMessage = e.message;
           }
-          
           showToast(errorMessage, 'error');
           loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
           loginBtn.disabled = false;
@@ -645,46 +656,27 @@
       const password = passwordInput.value.trim();
       if (!email || !password) return showToast("Completa correo y contraseña", 'error');
       if(password.length < 6) return showToast("La contraseña debe tener al menos 6 caracteres", 'error');
-      
-      registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creando cuenta...';
-      registerBtn.disabled = true;
-      
+      registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creando cuenta...'; registerBtn.disabled = true;
       auth.createUserWithEmailAndPassword(email, password)
         .then(() => {
           showToast("Cuenta creada exitosamente");
-          registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registrar cuenta';
-          registerBtn.disabled = false;
+          registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registrar cuenta'; registerBtn.disabled = false;
         })
         .catch(e => {
           let errorMessage = "Error al crear la cuenta";
-          
           switch (e.code) {
-            case 'auth/email-already-in-use':
-              errorMessage = "Ya existe una cuenta con este correo electrónico";
-              break;
-            case 'auth/invalid-email':
-              errorMessage = "El correo electrónico no es válido";
-              break;
-            case 'auth/weak-password':
-              errorMessage = "La contraseña es muy débil";
-              break;
-            default:
-              errorMessage = e.message;
+            case 'auth/email-already-in-use': errorMessage = "Ya existe una cuenta con este correo electrónico"; break;
+            case 'auth/invalid-email': errorMessage = "El correo electrónico no es válido"; break;
+            case 'auth/weak-password': errorMessage = "La contraseña es muy débil"; break;
+            default: errorMessage = e.message;
           }
-          
           showToast(errorMessage, 'error');
-          registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registrar cuenta';
-          registerBtn.disabled = false;
+          registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registrar cuenta'; registerBtn.disabled = false;
         });
     };
 
-    logoutBtn.onclick = () => {
-      auth.signOut();
-    };
-
-    cancelBtn.onclick = () => {
-      clearForm();
-    };
+    logoutBtn.onclick = () => { auth.signOut(); };
+    cancelBtn.onclick = () => { clearForm(); };
 
     auth.onAuthStateChanged(user => {
       if (user) {
@@ -692,8 +684,6 @@
         userEmailSpan.textContent = user.email;
         showScreen('main');
         loadPasswords();
-        
-        // Resetear botones de login
         loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
         loginBtn.disabled = false;
         registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registrar cuenta';
@@ -713,46 +703,33 @@
       const note = noteInput.value.trim();
       const pwd = pwdInput.value.trim();
       if (!note || !pwd) return showToast("Completa descripción y contraseña", 'error');
-
       const data = {
         note: encrypt(note),
         pwd: encrypt(pwd),
         updated: new Date()
       };
-
       saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
       saveBtn.disabled = true;
 
       if(editingId){
         db.collection("users").doc(currentUserId).collection("passwords").doc(editingId).set(data)
-          .then(() => {
-            showToast("Contraseña actualizada exitosamente");
-            clearForm();
-            loadPasswords();
-          })
+          .then(() => { showToast("Contraseña actualizada exitosamente"); clearForm(); loadPasswords(); })
           .catch(e => {
             showToast("Error actualizando: " + e.message, 'error');
-            saveBtn.innerHTML = '<i class="fas fa-save"></i> Actualizar';
-            saveBtn.disabled = false;
+            saveBtn.innerHTML = '<i class="fas fa-save"></i> Actualizar'; saveBtn.disabled = false;
           });
       } else {
         db.collection("users").doc(currentUserId).collection("passwords").add(data)
-          .then(() => {
-            showToast("Contraseña guardada exitosamente");
-            clearForm();
-            loadPasswords();
-          })
+          .then(() => { showToast("Contraseña guardada exitosamente"); clearForm(); loadPasswords(); })
           .catch(e => {
             showToast("Error guardando: " + e.message, 'error');
-            saveBtn.innerHTML = '<i class="fas fa-save"></i> Guardar';
-            saveBtn.disabled = false;
+            saveBtn.innerHTML = '<i class="fas fa-save"></i> Guardar'; saveBtn.disabled = false;
           });
       }
     };
 
     function loadPasswords(){
       listDiv.innerHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin fa-2x"></i><br><br>Cargando contraseñas...</div>';
-      
       db.collection("users").doc(currentUserId).collection("passwords")
         .orderBy("updated", "desc")
         .get()
@@ -774,34 +751,33 @@
             card.className = "password-card";
             card.innerHTML = `
               <div class="password-info">
-                <div class="password-title">
-                  <i class="fas fa-tag"></i>
-                  ${decrypt(data.note)}
-                </div>
-                <div class="password-value">
-                  <span style="flex: 1;">${decrypt(data.pwd)}</span>
-                </div>
+                <div class="password-title"><i class="fas fa-tag"></i> ${decrypt(data.note)}</div>
+                <div class="password-value" tabindex="0" title="Haz click para copiar">${decrypt(data.pwd)}</div>
               </div>
               <div class="card-actions">
-                <button onclick="copyPassword('${doc.id}')" class="btn btn-secondary btn-small">
-                  <i class="fas fa-copy"></i>
-                  Copiar
+                <button class="btn btn-secondary btn-small" data-action="copy" data-id="${doc.id}">
+                  <i class="fas fa-copy"></i> Copiar
                 </button>
-                <button onclick="editPwd('${doc.id}')" class="btn btn-primary btn-small">
-                  <i class="fas fa-edit"></i>
-                  Editar
+                <button class="btn btn-primary btn-small" data-action="edit" data-id="${doc.id}">
+                  <i class="fas fa-edit"></i> Editar
                 </button>
-                <button onclick="deletePwd('${doc.id}')" class="btn btn-danger btn-small">
-                  <i class="fas fa-trash"></i>
-                  Eliminar
+                <button class="btn btn-danger btn-small" data-action="delete" data-id="${doc.id}">
+                  <i class="fas fa-trash"></i> Eliminar
                 </button>
               </div>
             `;
+            card.querySelector('.password-value').addEventListener('click', () => copyPassword(doc.id));
+            card.querySelector('.password-value').addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') copyPassword(doc.id);
+            });
+            card.querySelector('[data-action="copy"]').onclick = () => copyPassword(doc.id);
+            card.querySelector('[data-action="edit"]').onclick = () => editPwd(doc.id);
+            card.querySelector('[data-action="delete"]').onclick = () => deletePwd(doc.id);
             listDiv.appendChild(card);
           });
         })
         .catch(e => {
-          listDiv.innerHTML = '<div style="text-align: center; color: #f56565; padding: 2rem;">Error cargando contraseñas</div>';
+          listDiv.innerHTML = '<div style="text-align: center; color: #ef4444; padding: 2rem;">Error cargando contraseñas</div>';
           showToast("Error cargando: " + e.message, 'error');
         });
     }
@@ -838,8 +814,6 @@
           formTitle.textContent = "Editar Contraseña";
           saveBtnText.textContent = "Actualizar";
           cancelBtn.classList.remove("hidden");
-          
-          // Scroll suave hacia el formulario
           document.querySelector('.section').scrollIntoView({ behavior: 'smooth' });
         })
         .catch(e => showToast("Error al cargar para editar: " + e.message, 'error'));
@@ -848,34 +822,16 @@
     window.deletePwd = function(id){
       if(confirm("¿Estás seguro de que quieres eliminar esta contraseña? Esta acción no se puede deshacer.")){
         db.collection("users").doc(currentUserId).collection("passwords").doc(id).delete()
-          .then(() => {
-            showToast("Contraseña eliminada exitosamente");
-            loadPasswords();
-          })
+          .then(() => { showToast("Contraseña eliminada exitosamente"); loadPasswords(); })
           .catch(e => showToast("Error eliminando: " + e.message, 'error'));
       }
     };
 
-    // Permitir submit con Enter
-    emailInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') loginBtn.click();
-    });
-    
-    passwordInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') loginBtn.click();
-    });
-    
-    recoveryEmailInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') sendRecoveryBtn.click();
-    });
-    
-    noteInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') pwdInput.focus();
-    });
-    
-    pwdInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') saveBtn.click();
-    });
+    emailInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') loginBtn.click(); });
+    passwordInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') loginBtn.click(); });
+    recoveryEmailInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') sendRecoveryBtn.click(); });
+    noteInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') pwdInput.focus(); });
+    pwdInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') saveBtn.click(); });
   </script>
 </body>
 </html>
