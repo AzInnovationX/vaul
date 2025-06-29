@@ -77,9 +77,22 @@
 
     * {margin:0;padding:0;box-sizing:border-box;}
     html {scroll-behavior: smooth;}
+    @keyframes animatedBackgroundLines {
+      0% { background-position: 0 0; }
+      100% { background-position: 100px 100px; } /* Ajustar 100px para cambiar velocidad/tamaño del patrón */
+    }
+
     body {
       font-family: var(--font-family-main);
-      background: linear-gradient(135deg, var(--bg-body-start) 0%, var(--bg-body-end) 100%);
+      background-color: var(--bg-body-start); /* Color base */
+      background-image: 
+        repeating-linear-gradient(45deg, 
+          rgba(var(--primary-color-1-rgb), 0.05) 0, 
+          rgba(var(--primary-color-1-rgb), 0.05) 1px, 
+          transparent 1px, 
+          transparent 20px /* Espaciado de las líneas */
+        );
+      animation: animatedBackgroundLines 10s linear infinite; /* Duración de la animación */
       min-height: 100vh;
       padding: 1rem;
       display: flex;
@@ -351,6 +364,31 @@
       .container {padding:0.5rem;} 
       .main-container, .section {padding:1rem 0.8rem;} 
       .header h1 {font-size:1.8rem;}
+      /* En móviles muy pequeños, desactivar la animación de fondo si se considera necesario */
+      /* body { animation: none; } */
+      /* body.dark { animation: none; } */
+    }
+
+    /* Considerar desactivar animación para usuarios que prefieren movimiento reducido */
+    @media (prefers-reduced-motion: reduce) {
+      body, body.dark {
+        animation: none !important;
+      }
+      .password-card:hover, .password-card:focus-within {
+        transform: none; /* Desactivar lift en cards */
+      }
+      .btn:active {
+        transform: none; /* Desactivar scale en botones */
+      }
+      .icon-save-animating i, .icon-copy-animating i {
+        animation: none !important;
+      }
+       /* Mantener transiciones esenciales para feedback, como las de opacity o color */
+      .card-actions {
+        transition: opacity var(--transition-duration-normal) ease-in-out, margin-top var(--transition-duration-normal) ease-in-out;
+         /* Quitar transform de la transición si es problemático */
+      }
+
     }
 
     /* DARK THEME */
@@ -390,6 +428,15 @@
       
       color-scheme: dark;
       color: var(--text-primary);
+      background-color: var(--bg-body-start); /* Color base para dark */
+      background-image: 
+        repeating-linear-gradient(45deg, 
+          rgba(var(--accent-color-1-rgb), 0.06) 0, /* Líneas con acento verde neón muy tenue */
+          rgba(var(--accent-color-1-rgb), 0.06) 1px, 
+          transparent 1px, 
+          transparent 25px /* Espaciado ligeramente mayor para dark */
+        );
+      animation-duration: 12s; /* Un poco más lento para dark */
     }
     body.dark .container {
       background: var(--bg-container);
