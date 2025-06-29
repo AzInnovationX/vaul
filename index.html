@@ -7,107 +7,119 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
-      --primary-color-start: #667eea;
-      --primary-color-end: #764ba2;
-      --primary-color-start-hover: #5a67d8;
-      --primary-color-end-hover: #6b46c1;
+      /* Paleta de Colores Tech Moderna - TEMA CLARO BASE */
+      --primary-color-1: #0066FF; /* Azul Cibernético Principal */
+      --primary-color-2: #003D82; /* Azul Cibernético Oscuro */
+      --primary-color-3: #1E3A8A; /* Azul Cibernético Medio */
+      --primary-color-1-rgb: 0, 102, 255; /* Para rgba */
 
-      --danger-color-start: #f56565;
-      --danger-color-end: #e53e3e;
-      --danger-color-start-hover: #e53e3e;
-      --danger-color-end-hover: #c53030;
+      --accent-color-1: #00FF88; /* Verde Neón Principal */
+      --accent-color-1-hover: #10B981; /* Verde Neón Hover */
+      --accent-color-1-rgb: 0, 255, 136; /* Para rgba */
+      --accent-color-2: #FF6B35; /* Naranja Tech Principal */
+      --accent-color-2-hover: #F59E0B; /* Naranja Tech Hover */
 
-      --text-primary: #2d3748;
-      --text-secondary: #4a5568;
-      --text-muted: #718096;
-      --text-on-primary: #ffffff;
-      --text-on-danger: #ffffff;
+      --danger-color-start: #FF4D4D; /* Rojo Peligro Tech */
+      --danger-color-end: #CC0000;   /* Rojo Peligro Tech Oscuro */
+      --danger-color-start-hover: #E60000;
+      --danger-color-end-hover: #B30000;
+      --danger-color-start-rgb: 255, 77, 77; /* Para rgba */
 
-      --bg-body: linear-gradient(135deg, var(--primary-color-start) 0%, var(--primary-color-end) 100%);
-      --bg-container: rgba(255,255,255,0.97);
-      --bg-input: #f7fafc;
-      --bg-input-focus: #fff;
-      --bg-section: #fff;
-      --bg-card: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-      --bg-button-secondary: #f7fafc;
-      --bg-button-secondary-hover: #edf2f7;
-      --bg-user-info: #e6fffa;
-      --bg-recovery-info: #f0f8ff;
-      --bg-password-value: #4a5568;
+      --text-primary: #0F172A; 
+      --text-secondary: #334155;
+      --text-muted: #64748B;    
+      --text-on-primary-bg: #FFFFFF; 
+      --text-on-accent-bg: #0F172A; 
+      --text-on-danger-bg: #FFFFFF;
 
-      --border-color-input: #e2e8f0;
-      --border-color-input-focus: var(--primary-color-start);
-      --border-color-invalid: #e53e3e;
-      --border-color-card: var(--primary-color-start);
-      --border-color-card-hover: var(--primary-color-end);
-      --border-user-info: #b2f5ea;
-      --border-recovery-info: #e6f3ff;
+      --bg-body-start: #F0F4F8; 
+      --bg-body-end: #E2E8F0;   
+      --bg-container: rgba(255, 255, 255, 0.85); 
+      --bg-input: #FFFFFF;
+      --bg-input-focus: #FFFFFF;
+      --bg-section: rgba(248, 250, 252, 0.9); 
+      --bg-card-start: #FFFFFF;
+      --bg-card-end: #F8FAFC;
+      --bg-button-secondary: #E2E8F0;
+      --bg-button-secondary-hover: #CBD5E1;
+      --bg-user-info: #F0F4F8;
+      --bg-recovery-info: #F0F4F8;
+      --bg-password-value: #F8FAFC;
 
-      --shadow-container: 0 16px 32px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.08);
-      --shadow-button: 0 4px 8px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
-      --shadow-button-hover: 0 7px 14px rgba(0,0,0,0.1), 0 3px 6px rgba(0,0,0,0.08);
-      --shadow-card: 0 4px 8px rgba(102, 126, 234, 0.09), 0 2px 4px rgba(102, 126, 234, 0.06);
-      --shadow-card-hover: 0 10px 20px rgba(102, 126, 234, 0.12), 0 6px 12px rgba(102, 126, 234, 0.1);
-      --shadow-toast: 0 5px 15px rgba(0,0,0,0.15);
+      --border-color-input: #CBD5E1;
+      --border-color-input-focus: var(--primary-color-1);
+      --border-color-invalid: var(--danger-color-start);
+      --border-color-card: var(--primary-color-1);
+      --border-color-card-hover: var(--accent-color-1);
+      --border-user-info: var(--primary-color-3);
+      --border-recovery-info: var(--primary-color-3);
 
-      --border-radius-container: 22px;
-      --border-radius-main: 12px;
-      --border-radius-small: 8px;
+      --shadow-container: 0 10px 30px rgba(0, 0, 0, 0.07);
+      --shadow-button: 0 3px 8px rgba(0, 0, 0, 0.08);
+      --shadow-button-hover: 0 5px 15px rgba(0, 0, 0, 0.12);
+      --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.06);
+      --shadow-card-hover: 0 8px 20px rgba(var(--primary-color-1-rgb), 0.15); 
+      --shadow-toast: 0 5px 15px rgba(0,0,0,0.1);
+      --glow-effect-light: 0 0 8px rgba(var(--accent-color-1-rgb), 0.7); 
+      --glow-effect-dark: 0 0 12px rgba(var(--accent-color-1-rgb), 0.9);
 
-      --font-family-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      --font-family-monospace: 'Courier New', monospace;
+      --border-radius-container: 18px;
+      --border-radius-main: 8px;
+      --border-radius-small: 5px;
 
-      --transition-duration-fast: 0.2s;
-      --transition-duration-normal: 0.3s;
-      --transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+      --font-family-main: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --font-family-monospace: 'Roboto Mono', 'Courier New', monospace;
+
+      --transition-duration-fast: 0.15s;
+      --transition-duration-normal: 0.25s;
+      --transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * {margin:0;padding:0;box-sizing:border-box;}
     html {scroll-behavior: smooth;}
     body {
       font-family: var(--font-family-main);
-      background: var(--bg-body);
+      background: linear-gradient(135deg, var(--bg-body-start) 0%, var(--bg-body-end) 100%);
       min-height: 100vh;
       padding: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      color-scheme: light only; /* Prevents browser default dark mode for now */
+      color-scheme: light; 
+      color: var(--text-primary);
       transition: background var(--transition-duration-normal) var(--transition-timing-function), color var(--transition-duration-normal) var(--transition-timing-function);
     }
     .container {
       background: var(--bg-container);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(8px);
       border-radius: var(--border-radius-container);
       padding: 2rem;
       width: 100%;
       max-width: 600px;
       box-shadow: var(--shadow-container);
-      color: var(--text-primary);
-      transition: box-shadow var(--transition-duration-normal) var(--transition-timing-function);
+      color: var(--text-primary); 
+      transition: box-shadow var(--transition-duration-normal) var(--transition-timing-function), background var(--transition-duration-normal) var(--transition-timing-function);
       position: relative;
     }
-    .container:focus-within {box-shadow: 0 0 0 3px var(--primary-color-end), var(--shadow-container);}
+    .container:focus-within {box-shadow: 0 0 0 3px rgba(var(--primary-color-1-rgb),0.3), var(--shadow-container);}
     
     .theme-switcher {position:absolute; top:18px; right:24px; z-index:10;}
     .switch {display:inline-flex;align-items:center;cursor:pointer;}
     .switch input {display:none;}
     .slider {width:36px;height:18px;background:var(--border-color-input);border-radius:var(--border-radius-main);position:relative;transition:background var(--transition-duration-normal) var(--transition-timing-function);margin-right:0.5em;}
-    .slider:before {content:""; position:absolute;left:3px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--primary-color-start);transition: transform var(--transition-duration-normal) var(--transition-timing-function), background var(--transition-duration-normal) var(--transition-timing-function);}
-    .switch input:checked + .slider {background:var(--primary-color-end);}
-    .switch input:checked + .slider:before {transform:translateX(16px);background:var(--text-on-primary);}
+    .slider:before {content:""; position:absolute;left:3px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--primary-color-1);transition: transform var(--transition-duration-normal) var(--transition-timing-function), background var(--transition-duration-normal) var(--transition-timing-function);}
     
     .header {text-align:center;margin-bottom:2rem;user-select:none;}
-    .header h1 {color:var(--text-secondary); font-size:2.5rem; margin-bottom:0.5rem; font-weight:700; letter-spacing:1px; display:flex; align-items:center; justify-content:center; gap:0.7rem;}
-    .header .subtitle {color:var(--text-muted);font-size:1.1rem;font-weight:500;}
+    .header h1 {color:var(--text-primary); font-size:2.5rem; margin-bottom:0.5rem; font-weight:700; letter-spacing:0.5px; display:flex; align-items:center; justify-content:center; gap:0.7rem;}
+    .header .subtitle {color:var(--text-secondary);font-size:1.1rem;font-weight:500;}
     
     .form-group {position:relative;margin-bottom:1.5rem;}
-    .form-group i {position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:#a0aec0;z-index:1;pointer-events:none;}
+    .form-group i {position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--text-muted);z-index:1;pointer-events:none; transition: color var(--transition-duration-fast);}
     
     input, textarea {
       width: 100%;
       padding: 1rem 1rem 1rem 3rem;
-      border: 2px solid var(--border-color-input);
+      border: 1px solid var(--border-color-input); 
       border-radius: var(--border-radius-main);
       font-size: 1rem;
       transition: border-color var(--transition-duration-normal) var(--transition-timing-function), 
@@ -117,57 +129,62 @@
       color: var(--text-primary);
     }
     input:focus, textarea:focus {
-      outline: none; /* Replaced by box-shadow for focus */
+      outline: none; 
       border-color: var(--border-color-input-focus);
       background: var(--bg-input-focus);
-      box-shadow: 0 0 0 3px rgba(102,126,234,0.2); /* Softer focus glow */
+      box-shadow: 0 0 0 3px rgba(var(--primary-color-1-rgb), 0.25), var(--glow-effect-light);
     }
     input[aria-invalid="true"], textarea[aria-invalid="true"] {
       border-color: var(--border-color-invalid);
-      background: #fff5f5; /* Keep specific error background or use a variable */
+      background: rgba(var(--danger-color-start-rgb), 0.05);
     }
+    input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0.8;}
     
     .password-input-group input {padding-right:5.5rem !important;}
-    .password-input-group button {background:none; border:none; color:var(--primary-color-start); font-size:1.1rem; cursor:pointer; transition:color var(--transition-duration-fast) var(--transition-timing-function); padding:0;}
-    .password-input-group button:hover {color:var(--primary-color-end);}
+    .password-input-group button {background:none; border:none; color:var(--primary-color-1); font-size:1.1rem; cursor:pointer; transition:color var(--transition-duration-fast) var(--transition-timing-function); padding:0;}
+    .password-input-group button:hover {color:var(--primary-color-2);}
     
     .btn {
-      width:100%; padding:1rem; border:none;
+      width:100%; padding: 0.9rem 1rem; border:none;
       border-radius:var(--border-radius-main);
       font-size:1rem; font-weight:600; cursor:pointer;
       transition: box-shadow var(--transition-duration-fast) var(--transition-timing-function), 
                   transform var(--transition-duration-fast) var(--transition-timing-function), 
-                  background var(--transition-duration-normal) var(--transition-timing-function);
-      display:flex; align-items:center; justify-content:center; gap:0.5rem;
+                  background var(--transition-duration-normal) var(--transition-timing-function),
+                  color var(--transition-duration-normal) var(--transition-timing-function);
+      display:flex; align-items:center; justify-content:center; gap:0.6rem; 
       margin-bottom:1rem; outline:none; position:relative;
       box-shadow: var(--shadow-button);
+      text-transform: uppercase; 
+      letter-spacing: 0.5px;
     }
-    .btn:active {transform:scale(0.98);}
-    .btn:focus-visible {box-shadow:0 0 0 3px var(--primary-color-end), var(--shadow-button-hover);}
+    .btn:active {transform:scale(0.97);}
+    .btn:focus-visible {box-shadow:0 0 0 3px rgba(var(--primary-color-1-rgb),0.4), var(--shadow-button-hover);}
     
     .btn-primary {
-      background: linear-gradient(135deg, var(--primary-color-start) 0%, var(--primary-color-end) 100%);
-      color: var(--text-on-primary);
+      background: linear-gradient(135deg, var(--primary-color-1) 0%, var(--primary-color-2) 100%);
+      color: var(--text-on-primary-bg);
     }
     .btn-primary:hover, .btn-primary:focus-visible {
-      background: linear-gradient(135deg, var(--primary-color-start-hover) 0%, var(--primary-color-end-hover) 100%);
-      box-shadow: var(--shadow-button-hover);
+      background: linear-gradient(135deg, var(--primary-color-2) 0%, var(--primary-color-3) 100%);
+      box-shadow: var(--shadow-button-hover), var(--glow-effect-light);
     }
     
     .btn-secondary {
       background: var(--bg-button-secondary);
       color: var(--text-secondary);
-      border: 2px solid var(--border-color-input);
+      border: 1px solid var(--border-color-input);
     }
     .btn-secondary:hover, .btn-secondary:focus-visible {
       background: var(--bg-button-secondary-hover);
-      border-color: #cbd5e0; /* Could be a variable too */
+      border-color: var(--primary-color-1); 
+      color: var(--primary-color-1);
       box-shadow: var(--shadow-button-hover);
     }
     
     .btn-danger {
       background: linear-gradient(135deg, var(--danger-color-start) 0%, var(--danger-color-end) 100%);
-      color: var(--text-on-danger);
+      color: var(--text-on-danger-bg);
     }
     .btn-danger:hover, .btn-danger:focus-visible {
       background: linear-gradient(135deg, var(--danger-color-start-hover) 0%, var(--danger-color-end-hover) 100%);
@@ -175,22 +192,24 @@
     }
     
     .btn-link {
-      background: none; color: var(--primary-color-start);
-      text-decoration: underline; font-size: 0.95rem;
+      background: none; color: var(--primary-color-1);
+      text-decoration: none; font-size: 0.9rem; 
       padding: 0.5rem; margin: 0; width: auto; box-shadow: none; border: none;
+      text-transform: none; 
+      letter-spacing: normal;
     }
     .btn-link:hover, .btn-link:focus-visible {
-      color: var(--primary-color-end); background: none; text-decoration: underline wavy;
+      color: var(--primary-color-2); background: none; text-decoration: underline;
     }
     
-    .btn-small {width: auto; padding: 0.5rem 1rem; font-size: 0.95rem; margin: 0 0.25rem;}
-    .btn[disabled] {opacity:0.7;cursor:not-allowed;filter:grayscale(0.2);}
+    .btn-small {width: auto; padding: 0.4rem 0.8rem; font-size: 0.85rem; margin: 0 0.25rem;}
+    .btn[disabled] {opacity:0.6;cursor:not-allowed;filter:grayscale(0.3);}
     .hidden {display:none !important;}
     .auth-container {text-align:center;}
     
-    .main-container {animation: fadeIn 0.4s var(--transition-timing-function);}
+    .main-container {animation: fadeIn 0.3s var(--transition-timing-function);}
     @keyframes fadeIn {
-      from{opacity:0;transform:translateY(15px);}
+      from{opacity:0;transform:translateY(10px);} 
       to{opacity:1;transform:translateY(0);}
     }
     
@@ -199,190 +218,358 @@
       padding: 1.5rem;
       border-radius: var(--border-radius-main);
       margin-bottom: 1.5rem;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.02); /* Softer shadow for sections */
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04); 
+      border: 1px solid var(--border-color-input); 
     }
     .section h2 {
-      color: var(--text-primary); margin-bottom: 1rem; font-size: 1.3rem;
-      display: flex; align-items: center; gap: 0.5rem; font-weight: 700;
+      color: var(--text-primary); margin-bottom: 1rem; font-size: 1.25rem; 
+      display: flex; align-items: center; gap: 0.6rem; font-weight: 600;
     }
     
     .password-card {
-      background: var(--bg-card);
-      padding: 1.5rem; margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--bg-card-start) 0%, var(--bg-card-end) 100%);
+      padding: 1.25rem; margin-bottom: 1rem; 
       border-radius: var(--border-radius-main);
-      border-left: 4px solid var(--border-color-card);
+      border-left: 3px solid var(--border-color-card); 
       transition: transform var(--transition-duration-fast) var(--transition-timing-function), 
                   box-shadow var(--transition-duration-fast) var(--transition-timing-function), 
-                  border-color var(--transition-duration-normal) var(--transition-timing-function);
+                  border-color var(--transition-duration-normal) var(--transition-timing-function),
+                  padding-bottom var(--transition-duration-normal) var(--transition-timing-function); /* Added padding-bottom transition */
       position: relative;
       box-shadow: var(--shadow-card);
+      overflow: hidden; /* Para ocultar los botones que se deslizan */
     }
     .password-card:hover, .password-card:focus-within {
-      transform: translateY(-2px) scale(1.005); /* Subtle lift */
-      box-shadow: var(--shadow-card-hover);
+      transform: translateY(-3px); 
+      box-shadow: var(--shadow-card-hover), var(--glow-effect-light);
       border-color: var(--border-color-card-hover);
+      /* padding-bottom: 4rem; /* Espacio para los botones, ajustar según sea necesario */
     }
     
-    .password-info {margin-bottom:1rem;}
+    .password-info {margin-bottom:0.5rem; transition: margin-bottom var(--transition-duration-fast) var(--transition-timing-function);} /* Reducir margen inferior y transicionar */
     .password-title {
-      font-size: 1.15rem; font-weight: 600; color: var(--text-primary);
-      margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; letter-spacing: 0.1px;
+      font-size: 1.1rem; font-weight: 600; color: var(--text-primary);
+      margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; letter-spacing: 0.2px;
     }
     .password-value {
-      background: var(--bg-password-value); color: var(--text-on-primary);
-      padding: 0.75rem; border-radius: var(--border-radius-small);
+      background: var(--bg-password-value); color: var(--text-secondary); 
+      padding: 0.7rem; border-radius: var(--border-radius-small);
       font-family: var(--font-family-monospace);
-      letter-spacing: 0.5px; word-break: break-all; position: relative;
-      display: flex; align-items: center; gap: 0.5rem; font-size: 1.08rem;
-      transition: background var(--transition-duration-normal) var(--transition-timing-function);
+      letter-spacing: 0.3px; word-break: break-all; position: relative;
+      display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; 
+      transition: background var(--transition-duration-normal) var(--transition-timing-function), color var(--transition-duration-normal);
+      border: 1px solid var(--border-color-input);
     }
-    .password-value:focus-within {outline:2px solid var(--primary-color-start);background:var(--text-primary);}
+    .password-value:focus-within {outline:1px solid var(--accent-color-1);background:var(--bg-input-focus); color: var(--text-primary);}
     
-    .card-actions {display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:flex-end;}
+    .card-actions {
+      display:flex;
+      gap:0.5rem;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      padding-top: 0.75rem; /* Espacio arriba de los botones */
+      max-height: 0; /* Oculto inicialmente */
+      opacity: 0;
+      transform: translateY(10px); /* Desplazamiento inicial */
+      transition: max-height var(--transition-duration-normal) ease-in-out, 
+                  opacity var(--transition-duration-normal) ease-in-out,
+                  transform var(--transition-duration-normal) ease-in-out,
+                  margin-top var(--transition-duration-normal) ease-in-out;
+      margin-top: 0;
+    }
+
+    .password-card:hover .card-actions,
+    .password-card:focus-within .card-actions {
+      max-height: 50px; /* Altura suficiente para los botones, ajustar si es necesario */
+      opacity: 1;
+      transform: translateY(0);
+      margin-top: 0.5rem; /* Margen cuando visible */
+    }
     
     .toast {
-      position: fixed; top: 24px; right: 24px;
-      background: #48bb78; /* Success color, can be a variable */
-      color: var(--text-on-primary);
-      padding: 1rem 1.5rem; border-radius: var(--border-radius-small);
-      box-shadow: var(--shadow-toast);
+      position: fixed; top: 20px; right: 20px; 
+      background: var(--accent-color-1); 
+      color: var(--text-on-accent-bg);
+      padding: 0.9rem 1.4rem; border-radius: var(--border-radius-small);
+      box-shadow: var(--shadow-toast), var(--glow-effect-light);
       z-index: 1000;
-      animation: slideInToast 0.4s var(--transition-timing-function), fadeOutToast 0.4s var(--transition-timing-function) 2.8s forwards;
-      font-size: 1rem; display: flex; align-items: center; gap: 0.7rem;
+      animation: slideInToast 0.3s var(--transition-timing-function), fadeOutToast 0.3s var(--transition-timing-function) 2.9s forwards;
+      font-size: 0.95rem; display: flex; align-items: center; gap: 0.7rem;
+      border: 1px solid var(--accent-color-1-hover);
     }
     .toast.error {
-        background: var(--danger-color-start); /* Error color */
+        background: var(--danger-color-start); 
+        color: var(--text-on-danger-bg);
+        border-color: var(--danger-color-end);
+        box-shadow: var(--shadow-toast), 0 0 8px rgba(var(--danger-color-start-rgb),0.7);
     }
 
     @keyframes slideInToast {
-      from{transform:translateX(110%);opacity:0;}
-      to{transform:translateX(0);opacity:1;}
+      from{transform:translateX(100%) scale(0.9);opacity:0;} 
+      to{transform:translateX(0) scale(1);opacity:1;}
     }
     @keyframes fadeOutToast {
-      from{opacity:1;transform:translateX(0);}
-      to{opacity:0;transform:translateX(110%);}
+      from{opacity:1;transform:translateX(0) scale(1);}
+      to{opacity:0;transform:translateX(100%) scale(0.9);} 
     }
     
-    .empty-state {text-align:center;padding:3rem 1rem;color:var(--text-muted);}
-    .empty-state i {font-size: 3rem; margin-bottom: 1rem; color: #cbd5e0; animation: floatIcon 2s infinite ease-in-out alternate;}
-    @keyframes floatIcon {from{transform:translateY(0);}to{transform:translateY(-8px);}}
+    .empty-state {text-align:center;padding:2.5rem 1rem;color:var(--text-muted);}
+    .empty-state i {font-size: 2.8rem; margin-bottom: 1rem; color: var(--primary-color-1); opacity:0.7; animation: floatIcon 2.2s infinite ease-in-out alternate;}
+    @keyframes floatIcon {from{transform:translateY(0) rotate(-2deg);}to{transform:translateY(-6px) rotate(2deg);}} 
     
     .user-info {
       background: var(--bg-user-info);
-      padding: 1rem; border-radius: var(--border-radius-small); margin-bottom: 1rem;
-      display: flex; align-items: center; justify-content: space-between; font-size: 1rem;
-      border: 1.5px solid var(--border-user-info);
+      padding: 0.8rem 1rem; border-radius: var(--border-radius-small); margin-bottom: 1rem;
+      display: flex; align-items: center; justify-content: space-between; font-size: 0.95rem;
+      border: 1px solid var(--border-user-info);
     }
     .user-email {color:var(--text-primary);font-weight:500;display:flex;align-items:center;gap:0.5rem;word-break:break-all;}
     
     .back-link {
-      display:flex;align-items:center;gap:0.5rem;color:var(--primary-color-start);
-      text-decoration:none;margin-bottom:1rem;font-size:0.98rem;font-weight:500;
+      display:flex;align-items:center;gap:0.4rem;color:var(--primary-color-1);
+      text-decoration:none;margin-bottom:1rem;font-size:0.9rem;font-weight:500;
       transition:color var(--transition-duration-fast) var(--transition-timing-function);
     }
-    .back-link:hover, .back-link:focus-visible {color:var(--primary-color-end);text-decoration:underline;}
+    .back-link:hover, .back-link:focus-visible {color:var(--primary-color-2);text-decoration:underline;}
     
     .recovery-info {
       background: var(--bg-recovery-info);
-      border: 2px solid var(--border-recovery-info);
+      border: 1px solid var(--border-recovery-info);
       border-radius: var(--border-radius-small); padding: 1rem; margin-bottom: 1rem; text-align: center;
     }
-    .recovery-info i {font-size:2rem;color:var(--primary-color-start);margin-bottom:0.5rem;}
-    .recovery-info p {color:var(--text-secondary);font-size:0.95rem;line-height:1.4;}
+    .recovery-info i {font-size:1.8rem;color:var(--primary-color-1);margin-bottom:0.5rem;}
+    .recovery-info p {color:var(--text-secondary);font-size:0.9rem;line-height:1.5;}
+     h3 { color: var(--text-primary); } /* Asegurar que h3 en recovery info herede color */
     
     @media (max-width:768px){
       .container {margin:0;border-radius:0;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:1rem;max-width:100vw;}
       .header h1 {font-size:2rem;}
       .card-actions {justify-content:center;}
-      .toast {right:8px;left:8px;width:calc(100vw - 16px);}
+      .toast {right:1rem;left:1rem;width:calc(100vw - 2rem); top:1rem;} 
     }
     @media (max-width:480px){
-      .container {padding:0.2rem;}
-      .main-container, .section {padding:1rem 0.4rem;}
-      .header h1 {font-size:1.5rem;}
+      .container {padding:0.5rem;} 
+      .main-container, .section {padding:1rem 0.8rem;} 
+      .header h1 {font-size:1.8rem;}
     }
 
     /* DARK THEME */
     body.dark {
-      --text-primary: #e0e0e0;
-      --text-secondary: #c0c0c0;
-      --text-muted: #a0a0a0;
-      /* --text-on-primary: #ffffff; */ /* Remains same or adjust if needed */
-      /* --text-on-danger: #ffffff; */ /* Remains same */
+      --text-primary: #E0E0E0;
+      --text-secondary: #B0B0B0;
+      --text-muted: #888888;
 
-      --bg-body: linear-gradient(135deg, #232946 0%, #321e4f 100%);
-      --bg-container: rgba(32,32,64,0.96);
-      --bg-input: #2a2a40;
-      --bg-input-focus: #31314a;
-      --bg-section: #232946;
-      --bg-card: linear-gradient(135deg, #2a2a40 0%, #232946 100%);
-      --bg-button-secondary: #232946;
-      --bg-button-secondary-hover: #31314a;
-      --bg-user-info: #321e4f;
-      --bg-recovery-info: #2a2a40; /* Darker recovery info */
-      --bg-password-value: #1e1e30; /* Darker password value bg */
+      --bg-body-start: #0F172A; 
+      --bg-body-end: #1E293B; 
+      --bg-container: rgba(30, 41, 59, 0.92); 
+      --bg-input: #334155; 
+      --bg-input-focus: #475569;
+      --bg-section: rgba(22, 32, 51, 0.95); 
+      --bg-card-start: #1E293B;
+      --bg-card-end: #27364b;
+      --bg-button-secondary: #334155;
+      --bg-button-secondary-hover: #475569;
+      --bg-user-info: rgba(22, 32, 51, 0.95);
+      --bg-recovery-info: rgba(22, 32, 51, 0.95);
+      --bg-password-value: #0F172A;
 
-      --border-color-input: #44495f;
-      --border-color-input-focus: var(--primary-color-start-hover); /* Use hover color for focus in dark */
-      /* --border-color-invalid: #e53e3e; */ /* Remains same or desaturate slightly */
-      --border-color-card: var(--primary-color-start);
-      --border-color-card-hover: var(--primary-color-start-hover);
-      --border-user-info: #4a3b76;
-      --border-recovery-info: #393986;
+      --border-color-input: #4A5568; 
+      --border-color-input-focus: var(--accent-color-1);
+      /* --border-color-invalid: var(--danger-color-start); */ /* Ya definido globalmente */
+      --border-color-card: var(--primary-color-1);
+      --border-color-card-hover: var(--accent-color-1);
+      --border-user-info: var(--primary-color-3);
+      --border-recovery-info: var(--primary-color-3);
 
-      --shadow-container: 0 16px 32px rgba(0,0,0,0.2), 0 8px 16px rgba(0,0,0,0.15);
-      --shadow-button: 0 4px 8px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.1);
-      --shadow-button-hover: 0 7px 14px rgba(0,0,0,0.2), 0 3px 6px rgba(0,0,0,0.15);
-      --shadow-card: 0 4px 8px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.08);
-      --shadow-card-hover: 0 10px 20px rgba(0,0,0,0.15), 0 6px 12px rgba(0,0,0,0.12);
-      --shadow-toast: 0 5px 15px rgba(0,0,0,0.25);
-
+      --shadow-container: 0 16px 48px rgba(var(--primary-color-1-rgb), 0.15), 0 8px 24px rgba(var(--primary-color-1-rgb), 0.1);
+      --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.35);
+      --shadow-button-hover: 0 7px 18px rgba(0, 0, 0, 0.45);
+      --shadow-card: 0 6px 18px rgba(0, 0, 0, 0.3);
+      --shadow-card-hover: 0 10px 25px rgba(var(--accent-color-1-rgb), 0.25);
+      --shadow-toast: 0 5px 20px rgba(0,0,0,0.35);
+      
+      color-scheme: dark;
       color: var(--text-primary);
     }
-    body.dark .header h1 {color: var(--text-secondary);}
-    body.dark .header .subtitle {color: var(--text-muted);}
-    body.dark .form-group i {color: #707090;}
-    body.dark input, body.dark textarea { color: var(--text-primary); border-color: var(--border-color-input); }
+    body.dark .container {
+      background: var(--bg-container);
+      color: var(--text-primary); 
+    }
+    body.dark .container:focus-within {box-shadow: 0 0 0 3px rgba(var(--accent-color-1-rgb),0.3), var(--shadow-container);}
+
+    body.dark .theme-switcher .slider {background:var(--primary-color-3);}
+    body.dark .theme-switcher .slider:before {transform:translateX(16px);background:var(--accent-color-1);}
+    body.dark .theme-switcher .fa-moon { color: var(--accent-color-1); }
+
+
+    body.dark .header h1 {color: var(--text-primary);}
+    body.dark .header .subtitle {color: var(--text-secondary);}
+    body.dark .form-group i {color: var(--text-muted);}
+    body.dark input, body.dark textarea { 
+      color: var(--text-primary); 
+      border-color: var(--border-color-input); 
+      background: var(--bg-input);
+    }
     body.dark input:focus, body.dark textarea:focus {
         border-color: var(--border-color-input-focus);
-        box-shadow: 0 0 0 3px rgba(145, 103, 234, 0.25); /* Adjusted focus glow for dark */
+        background: var(--bg-input-focus);
+        box-shadow: 0 0 0 3px rgba(var(--accent-color-1-rgb), 0.3), var(--glow-effect-dark);
     }
     body.dark input[aria-invalid="true"], body.dark textarea[aria-invalid="true"] {
-        border-color: var(--border-color-invalid); background: #5d3838; /* Darker error background */
+        border-color: var(--border-color-invalid); 
+        background: rgba(var(--danger-color-start-rgb), 0.15);
     }
-    body.dark .password-input-group button {color:var(--primary-color-start-hover);}
-    body.dark .password-input-group button:hover {color:var(--primary-color-start);}
+    body.dark input::placeholder, body.dark textarea::placeholder { color: var(--text-muted); opacity: 0.7;}
 
-    body.dark .btn-primary {background: linear-gradient(135deg,var(--primary-color-start-hover) 0%,var(--primary-color-end) 100%);}
-    body.dark .btn-primary:hover, body.dark .btn-primary:focus-visible {background: linear-gradient(135deg,var(--primary-color-start) 0%,var(--primary-color-end-hover) 100%);}
+
+    body.dark .password-input-group button {color:var(--accent-color-1);}
+    body.dark .password-input-group button:hover {color:var(--accent-color-1-hover);}
+
+    body.dark .btn-primary {
+      background: linear-gradient(135deg,var(--primary-color-1) 0%,var(--primary-color-2) 100%);
+      color: var(--text-on-primary-bg);
+    }
+    body.dark .btn-primary:hover, body.dark .btn-primary:focus-visible {
+      background: linear-gradient(135deg,var(--accent-color-1) 0%,var(--accent-color-1-hover) 100%);
+      color: var(--text-on-accent-bg);
+      box-shadow: var(--shadow-button-hover), var(--glow-effect-dark);
+    }
     
-    body.dark .btn-secondary {color:var(--text-primary); border-color: var(--border-color-input);}
-    body.dark .btn-secondary:hover, body.dark .btn-secondary:focus-visible {border-color: var(--primary-color-start-hover);}
+    body.dark .btn-secondary {
+      color:var(--text-primary); 
+      border-color: var(--border-color-input);
+      background: var(--bg-button-secondary);
+    }
+    body.dark .btn-secondary:hover, body.dark .btn-secondary:focus-visible {
+      border-color: var(--accent-color-1);
+      color: var(--accent-color-1);
+      background: var(--bg-button-secondary-hover);
+    }
 
-    body.dark .btn-danger {background:linear-gradient(135deg, var(--danger-color-start-hover) 0%, var(--danger-color-end-hover) 100%);}
-    body.dark .btn-danger:hover, body.dark .btn-danger:focus-visible {background:linear-gradient(135deg, #c53030 0%, #a02020 100%);}
+    /* .btn-danger es igual en ambos temas, ya usa los colores tech */
 
-    body.dark .btn-link {color: var(--primary-color-start-hover);}
-    body.dark .btn-link:hover, body.dark .btn-link:focus-visible {color: var(--primary-color-start);}
+    body.dark .btn-link {color: var(--accent-color-1);}
+    body.dark .btn-link:hover, body.dark .btn-link:focus-visible {color: var(--accent-color-1-hover);}
 
+    body.dark .section {
+      background: var(--bg-section);
+      border-color: var(--border-color-input); 
+    }
     body.dark .section h2 {color: var(--text-primary);}
+    body.dark .password-card {
+      background: linear-gradient(135deg, var(--bg-card-start) 0%, var(--bg-card-end) 100%);
+      border-left-color: var(--border-color-card);
+    }
+    body.dark .password-card:hover, body.dark .password-card:focus-within {
+      border-color: var(--border-color-card-hover);
+      box-shadow: var(--shadow-card-hover), var(--glow-effect-dark);
+    }
     body.dark .password-title {color: var(--text-primary);}
-    body.dark .password-value:focus-within {outline:2px solid var(--primary-color-start-hover);background:var(--text-secondary);}
+    body.dark .password-value {
+      background: var(--bg-password-value); 
+      color: var(--text-secondary);
+      border-color: var(--border-color-input);
+    }
+    body.dark .password-value:focus-within {outline:1px solid var(--accent-color-1);background:var(--bg-input-focus); color: var(--text-primary);}
     
-    body.dark .toast {background: #7f5af0; color:var(--text-on-primary);} /* Adjusted dark toast */
-    body.dark .toast.error {background: var(--danger-color-end-hover);}
+    body.dark .toast {
+      background: var(--accent-color-1); 
+      color:var(--text-on-accent-bg);
+      border-color: var(--accent-color-1-hover);
+      box-shadow: var(--shadow-toast), var(--glow-effect-dark);
+    }
+    body.dark .toast.error {
+      background: var(--danger-color-start);
+      color:var(--text-on-danger-bg);
+      border-color: var(--danger-color-end);
+      box-shadow: var(--shadow-toast), 0 0 8px rgba(var(--danger-color-start-rgb),0.7);
+    }
 
     body.dark .empty-state {color:var(--text-muted);}
-    body.dark .empty-state i {color:#393986;}
+    body.dark .empty-state i {color:var(--primary-color-1); opacity: 0.8;}
+    body.dark .user-info {
+      background: var(--bg-user-info);
+      border-color: var(--border-user-info);
+    }
     body.dark .user-email {color:var(--text-primary);}
-    body.dark .back-link {color:var(--primary-color-start-hover);}
-    body.dark .back-link:hover, body.dark .back-link:focus-visible {color:var(--primary-color-start);}
-    body.dark .recovery-info i {color:var(--primary-color-start-hover);}
+    body.dark .back-link {color:var(--accent-color-1);}
+    body.dark .back-link:hover, body.dark .back-link:focus-visible {color:var(--accent-color-1-hover);}
+    body.dark .recovery-info {
+      background: var(--bg-recovery-info);
+      border-color: var(--border-recovery-info);
+    }
+    body.dark .recovery-info i {color:var(--accent-color-1);} 
     body.dark .recovery-info p {color:var(--text-secondary);}
+    body.dark h3 { color: var(--text-primary); }
 
-    /* Ensure moon icon color changes with theme */
-    .theme-switcher .fa-moon { color: var(--primary-color-end); }
-    body.dark .theme-switcher .fa-moon { color: var(--primary-color-start-hover); }
+
+    /* Theme switcher icon color - Light theme specific */
+    .theme-switcher .fa-moon { color: var(--primary-color-2); }
+    /* Dark theme icon color is already handled in body.dark .theme-switcher .fa-moon */
+
+    /* Password Strength Meter */
+    .password-strength-meter {
+      height: 10px; /* Height of the bar container + text */
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .strength-bar {
+      flex-grow: 1;
+      height: 6px; /* Actual bar height */
+      background-color: var(--border-color-input); /* Default bar color */
+      border-radius: var(--border-radius-small);
+      transition: background-color var(--transition-duration-fast) var(--transition-timing-function), width var(--transition-duration-fast) var(--transition-timing-function);
+      width: 0%; /* Start empty */
+    }
+    .strength-text {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      transition: color var(--transition-duration-fast) var(--transition-timing-function);
+    }
+
+    /* Strength levels */
+    .strength-bar.strength-0 { background-color: transparent; width: 0%; } /* Empty state */
+    .strength-bar.strength-1 { background-color: var(--danger-color-start); width: 20%; } /* Muy Débil */
+    .strength-bar.strength-2 { background-color: #FFBF00; width: 40%; } /* Débil - Naranja/Amarillo */
+    .strength-bar.strength-3 { background-color: #FFFF00; width: 60%; } /* Media - Amarillo */
+    .strength-bar.strength-4 { background-color: #90EE90; width: 80%; } /* Fuerte - Verde Claro */
+    .strength-bar.strength-5 { background-color: var(--accent-color-1); width: 100%; } /* Muy Fuerte */
+
+    body.dark .strength-bar.strength-0 { background-color: transparent; }
+    body.dark .strength-bar.strength-1 { background-color: var(--danger-color-start); }
+    body.dark .strength-bar.strength-2 { background-color: #F59E0B; } /* Naranja Tech para dark */
+    body.dark .strength-bar.strength-3 { background-color: #F5E60B; } /* Amarillo Tech para dark */
+    body.dark .strength-bar.strength-4 { background-color: #10B981; } /* Verde Neón Hover para dark */
+    body.dark .strength-bar.strength-5 { background-color: var(--accent-color-1); }
+
+    /* Icon Animations */
+    .icon-save-animating i {
+      animation: iconSavePress 0.3s var(--transition-timing-function);
+    }
+    @keyframes iconSavePress {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(0.85) translateY(1px); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .icon-copy-animating i {
+      animation: iconCopyPulse 0.4s var(--transition-timing-function);
+    }
+    @keyframes iconCopyPulse {
+      0% { transform: scale(1); color: var(--text-on-secondary-bg, var(--text-secondary));} /* Color original del icono en btn-secondary */
+      50% { transform: scale(1.2); color: var(--accent-color-1); }
+      100% { transform: scale(1); color: var(--text-on-secondary-bg, var(--text-secondary));}
+    }
+    body.dark .icon-copy-animating i {
+       animation-name: iconCopyPulseDark; /* Referenciar la variable correcta para dark */
+    }
+    @keyframes iconCopyPulseDark {
+      0% { color: var(--text-primary); transform: scale(1); }
+      50% { color: var(--accent-color-1); transform: scale(1.2); }
+      100% { color: var(--text-primary); transform: scale(1); }
+    }
 
   </style>
 </head>
@@ -392,7 +579,7 @@
       <label class="switch" aria-label="Cambiar modo claro/oscuro">
         <input type="checkbox" id="themeToggle" aria-checked="false">
         <span class="slider"></span>
-        <i class="fas fa-moon" style="margin-left:6px;color:#764ba2;"></i>
+        <i class="fas fa-moon" style="margin-left:6px;"></i>
       </label>
     </div>
     <div class="header" aria-label="Título principal">
@@ -418,7 +605,6 @@
           <i class="fas fa-user-plus"></i>
           Registrar cuenta
         </button>
-        <!-- Botones de huella eliminados -->
         <button id="forgotPasswordBtn" class="btn btn-link" aria-label="¿Olvidaste tu contraseña?">
           <i class="fas fa-question-circle"></i>
           ¿Olvidaste tu contraseña?
@@ -434,7 +620,7 @@
         </a>
         <div class="recovery-info">
           <i class="fas fa-envelope-open-text" aria-hidden="true"></i>
-          <h3 style="margin-bottom: 0.5rem; color: #2d3748;">Recuperar Contraseña</h3>
+          <h3 style="margin-bottom: 0.5rem;">Recuperar Contraseña</h3>
           <p>Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.</p>
         </div>
         <div class="form-group">
@@ -470,11 +656,14 @@
         </div>
         <div class="form-group password-input-group" style="position:relative;">
           <i class="fas fa-key" aria-hidden="true"></i>
-          <!-- El campo de contraseña es visible por defecto -->
           <input type="text" id="pwd" placeholder="Contraseña" aria-label="Contraseña" maxlength="64" autocomplete="new-password"/>
           <button type="button" id="generatePwd" class="btn btn-link" style="position:absolute;right:0.7rem;top:0.55rem;" tabindex="-1" aria-label="Generar contraseña segura">
             <i class="fas fa-magic"></i>
           </button>
+        </div>
+        <div id="passwordStrength" class="password-strength-meter">
+          <div class="strength-bar"></div>
+          <div class="strength-text"></div>
         </div>
         <button id="saveBtn" class="btn btn-primary" aria-label="Guardar contraseña">
           <i class="fas fa-save"></i>
@@ -498,7 +687,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-functions-compat.js"></script>
-  <!-- Script de @simplewebauthn/browser eliminado -->
   <script>
     // ==============================
     // FIREBASE CONFIGURACIÓN
@@ -514,9 +702,8 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
-    const functions = firebase.functions(); // Inicializar Firebase Functions
+    const functions = firebase.functions(); 
 
-    // Configurar para usar emuladores si se está en desarrollo
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
       console.log("Usando emuladores de Firebase...");
       auth.useEmulator("http://localhost:9099");
@@ -524,10 +711,6 @@
       functions.useEmulator("localhost", 5001);
     }
 
-
-    // ==============================
-    // ELEMENTOS DEL DOM
-    // ==============================
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
     const loginBtn = document.getElementById("loginBtn");
@@ -550,40 +733,31 @@
     const saveBtnText = document.getElementById("saveBtnText");
     const themeToggle = document.getElementById('themeToggle');
     const generatePwd = document.getElementById('generatePwd');
-    // Referencias a botones de huella eliminadas
-    // const fingerprintRegisterBtn = document.getElementById('fingerprintRegisterBtn');
-    // const fingerprintLoginBtn = document.getElementById('fingerprintLoginBtn');
-
+    const passwordStrengthDiv = document.getElementById('passwordStrength');
+    const strengthBar = passwordStrengthDiv.querySelector('.strength-bar');
+    const strengthText = passwordStrengthDiv.querySelector('.strength-text');
 
     let currentUserId = null;
     let editingId = null;
 
-    function encrypt(text) {
-      return btoa(text);
-    }
-    function decrypt(text) {
-      return atob(text);
-    }
+    function encrypt(text) { return btoa(text); }
+    function decrypt(text) { return atob(text); }
 
     function showToast(message, type = 'success') {
       const toast = document.createElement('div');
       toast.className = 'toast';
       toast.setAttribute("role", "status");
       toast.setAttribute("aria-live", "polite");
-      if (type === 'error') {
-        toast.classList.add('error');
-      }
-      toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'exclamation-triangle'}"></i> ${message}`;
+      if (type === 'error') toast.classList.add('error');
+      toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i> ${message}`; // Iconos mejorados
       document.body.appendChild(toast);
-      setTimeout(() => {
-        toast.remove();
-      }, 3200);
+      setTimeout(() => { toast.remove(); }, 3200);
     }
 
     async function copyToClipboard(text) {
       try {
         await navigator.clipboard.writeText(text);
-        showToast('Contraseña copiada al portapapeles');
+        showToast('Contraseña copiada'); // Mensaje más corto
       } catch (err) {
         const textArea = document.createElement('textarea');
         textArea.value = text;
@@ -591,7 +765,7 @@
         textArea.select();
         document.execCommand('copy');
         document.body.removeChild(textArea);
-        showToast('Contraseña copiada al portapapapeles');
+        showToast('Contraseña copiada');
       }
     }
 
@@ -599,13 +773,9 @@
       authDiv.classList.add('hidden');
       recoveryDiv.classList.add('hidden');
       mainDiv.classList.add('hidden');
-      if (screen === 'auth') {
-        authDiv.classList.remove('hidden');
-      } else if (screen === 'recovery') {
-        recoveryDiv.classList.remove('hidden');
-      } else if (screen === 'main') {
-        mainDiv.classList.remove('hidden');
-      }
+      if (screen === 'auth') authDiv.classList.remove('hidden');
+      else if (screen === 'recovery') recoveryDiv.classList.remove('hidden');
+      else if (screen === 'main') mainDiv.classList.remove('hidden');
     }
 
     forgotPasswordBtn.onclick = () => {
@@ -622,52 +792,48 @@
 
     sendRecoveryBtn.onclick = () => {
       const email = recoveryEmailInput.value.trim();
-      if (!email) {
-        showToast("Por favor ingresa tu correo electrónico", 'error');
-        recoveryEmailInput.setAttribute("aria-invalid", "true");
-        recoveryEmailInput.focus();
-        return;
-      }
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        showToast("Por favor ingresa un correo electrónico válido", 'error');
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showToast("Correo electrónico inválido", 'error');
         recoveryEmailInput.setAttribute("aria-invalid", "true");
         recoveryEmailInput.focus();
         return;
       }
       recoveryEmailInput.removeAttribute("aria-invalid");
-
       sendRecoveryBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
       sendRecoveryBtn.disabled = true;
-
       auth.sendPasswordResetEmail(email)
         .then(() => {
-          showToast("Enlace de recuperación enviado. Revisa tu correo electrónico.");
+          showToast("Enlace enviado. Revisa tu correo.");
           showScreen('auth');
           recoveryEmailInput.value = '';
         })
-        .catch((error) => {
-          let errorMessage = "Error al enviar el enlace de recuperación";
-          switch (error.code) {
-            case 'auth/user-not-found':
-              errorMessage = "No existe una cuenta con este correo electrónico";
-              break;
-            case 'auth/invalid-email':
-              errorMessage = "El correo electrónico no es válido";
-              break;
-            case 'auth/too-many-requests':
-              errorMessage = "Demasiados intentos. Intenta de nuevo más tarde";
-              break;
-            default:
-              errorMessage = error.message;
-          }
-          showToast(errorMessage, 'error');
-        })
+        .catch(handleAuthError)
         .finally(() => {
-          sendRecoveryBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar enlace de recuperación';
+          sendRecoveryBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar enlace';
           sendRecoveryBtn.disabled = false;
         });
     };
+    
+    function handleAuthError(error, elToInvalidate = null, elToInvalidate2 = null) {
+        let errorMessage = "Ocurrió un error inesperado.";
+        switch (error.code) {
+            case 'auth/user-not-found': errorMessage = "Usuario no encontrado."; if(elToInvalidate) elToInvalidate.setAttribute("aria-invalid", "true"); break;
+            case 'auth/wrong-password': errorMessage = "Contraseña incorrecta."; if(elToInvalidate) elToInvalidate.setAttribute("aria-invalid", "true"); break;
+            case 'auth/invalid-email': errorMessage = "Correo inválido."; if(elToInvalidate) elToInvalidate.setAttribute("aria-invalid", "true"); break;
+            case 'auth/user-disabled': errorMessage = "Usuario deshabilitado."; break;
+            case 'auth/too-many-requests': errorMessage = "Demasiados intentos. Prueba más tarde."; break;
+            case 'auth/email-already-in-use': errorMessage = "Correo ya en uso."; if(elToInvalidate) elToInvalidate.setAttribute("aria-invalid", "true"); break;
+            case 'auth/weak-password': errorMessage = "Contraseña débil (mín. 6 caracteres)."; if(elToInvalidate) elToInvalidate.setAttribute("aria-invalid", "true"); break;
+            default: errorMessage = error.message.includes("network error") ? "Error de red. Verifica tu conexión." : error.message;
+        }
+        showToast(errorMessage, 'error');
+        if(elToInvalidate && elToInvalidate2) { // Para login/registro
+             if (!emailInput.value) emailInput.setAttribute("aria-invalid", "true");
+             if (!passwordInput.value) passwordInput.setAttribute("aria-invalid", "true");
+        } else if (elToInvalidate) {
+            elToInvalidate.focus();
+        }
+    }
 
     loginBtn.onclick = () => {
       const email = emailInput.value.trim();
@@ -680,36 +846,11 @@
       }
       emailInput.removeAttribute("aria-invalid");
       passwordInput.removeAttribute("aria-invalid");
-
-      loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Iniciando sesión...';
+      loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Accediendo...';
       loginBtn.disabled = true;
-
       auth.signInWithEmailAndPassword(email, password)
-        .catch(e => {
-          let errorMessage = "Error de inicio de sesión";
-          switch (e.code) {
-            case 'auth/user-not-found':
-              errorMessage = "No existe una cuenta con este correo electrónico";
-              emailInput.setAttribute("aria-invalid", "true");
-              break;
-            case 'auth/wrong-password':
-              errorMessage = "Contraseña incorrecta";
-              passwordInput.setAttribute("aria-invalid", "true");
-              break;
-            case 'auth/invalid-email':
-              errorMessage = "El correo electrónico no es válido";
-              emailInput.setAttribute("aria-invalid", "true");
-              break;
-            case 'auth/user-disabled':
-              errorMessage = "Esta cuenta ha sido deshabilitada";
-              break;
-            case 'auth/too-many-requests':
-              errorMessage = "Demasiados intentos fallidos. Intenta más tarde";
-              break;
-            default:
-              errorMessage = e.message;
-          }
-          showToast(errorMessage, 'error');
+        .catch(e => handleAuthError(e, passwordInput, emailInput)) // emailInput como segundo es intencional para el re-focus
+        .finally(() => {
           loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
           loginBtn.disabled = false;
         });
@@ -725,55 +866,25 @@
         return;
       }
       if(password.length < 6) {
-        showToast("La contraseña debe tener al menos 6 caracteres", 'error');
+        showToast("Contraseña débil (mín. 6 caracteres)", 'error');
         passwordInput.setAttribute("aria-invalid", "true");
         return;
       }
       emailInput.removeAttribute("aria-invalid");
       passwordInput.removeAttribute("aria-invalid");
-
-      registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creando cuenta...';
+      registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creando...';
       registerBtn.disabled = true;
-
       auth.createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          showToast("Cuenta creada exitosamente");
-          // No es necesario llamar a signInWithEmailAndPassword aquí,
-          // onAuthStateChanged se encargará del nuevo usuario.
-        })
-        .catch(e => {
-          let errorMessage = "Error al crear la cuenta";
-          switch (e.code) {
-            case 'auth/email-already-in-use':
-              errorMessage = "Ya existe una cuenta con este correo electrónico";
-              emailInput.setAttribute("aria-invalid", "true");
-              break;
-            case 'auth/invalid-email':
-              errorMessage = "El correo electrónico no es válido";
-              emailInput.setAttribute("aria-invalid", "true");
-              break;
-            case 'auth/weak-password':
-              errorMessage = "La contraseña es muy débil";
-              passwordInput.setAttribute("aria-invalid", "true");
-              break;
-            default:
-              errorMessage = e.message;
-          }
-          showToast(errorMessage, 'error');
-        })
+        .then(() => showToast("Cuenta creada exitosamente"))
+        .catch(e => handleAuthError(e, passwordInput, emailInput))
         .finally(() => {
             registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registrar cuenta';
             registerBtn.disabled = false;
         });
     };
 
-    logoutBtn.onclick = () => {
-      auth.signOut();
-    };
-
-    cancelBtn.onclick = () => {
-      clearForm();
-    };
+    logoutBtn.onclick = () => auth.signOut();
+    cancelBtn.onclick = () => clearForm();
 
     auth.onAuthStateChanged(user => {
       if (user) {
@@ -781,14 +892,13 @@
         userEmailSpan.textContent = user.email;
         showScreen('main');
         loadPasswords();
+        [loginBtn, registerBtn].forEach(btn => { btn.disabled = false; });
         loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión';
-        loginBtn.disabled = false;
         registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Registrar cuenta';
-        registerBtn.disabled = false;
-        emailInput.removeAttribute("aria-invalid");
-        passwordInput.removeAttribute("aria-invalid");
+        [emailInput, passwordInput, recoveryEmailInput].forEach(el => el.removeAttribute("aria-invalid"));
+        
         if (!sessionStorage.getItem(`welcome_${user.uid}`)) {
-          showWelcome();
+          showToast(`¡Bienvenido/a, ${user.email}!`, 'success'); // Usar toast para bienvenida
           sessionStorage.setItem(`welcome_${user.uid}`, 'shown');
         }
       } else {
@@ -796,9 +906,7 @@
         showScreen('auth');
         clearForm();
         listDiv.innerHTML = "";
-        emailInput.value = "";
-        passwordInput.value = "";
-        recoveryEmailInput.value = "";
+        [emailInput, passwordInput, recoveryEmailInput].forEach(el => el.value = "");
       }
     });
 
@@ -813,64 +921,43 @@
       }
       noteInput.removeAttribute("aria-invalid");
       pwdInput.removeAttribute("aria-invalid");
-
-      const data = {
-        note: encrypt(note),
-        pwd: encrypt(pwd),
-        updated: new Date()
-      };
-
+      const data = { note: encrypt(note), pwd: encrypt(pwd), updated: new Date() };
       saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
       saveBtn.disabled = true;
+      
+      // Animación icono Guardar (inicio)
+      const saveIcon = saveBtn.querySelector('i');
+      saveIcon.classList.add('icon-save-animating');
+      saveIcon.addEventListener('animationend', () => {
+        saveIcon.classList.remove('icon-save-animating');
+      }, { once: true });
 
-      if(editingId){
-        db.collection("users").doc(currentUserId).collection("passwords").doc(editingId).set(data)
-          .then(() => {
-            showToast("Contraseña actualizada exitosamente");
-            clearForm();
-            loadPasswords();
-          })
-          .catch(e => {
-            showToast("Error actualizando: " + e.message, 'error');
-          })
-          .finally(() => {
-            saveBtn.innerHTML = editingId ? '<i class="fas fa-save"></i> Actualizar' : '<i class="fas fa-save"></i> Guardar';
-            saveBtn.disabled = false;
-          });
-      } else {
-        db.collection("users").doc(currentUserId).collection("passwords").add(data)
-          .then(() => {
-            showToast("Contraseña guardada exitosamente");
-            clearForm();
-            loadPasswords();
-          })
-          .catch(e => {
-            showToast("Error guardando: " + e.message, 'error');
-          })
-          .finally(() => {
-            saveBtn.innerHTML = '<i class="fas fa-save"></i> Guardar';
-            saveBtn.disabled = false;
-          });
-      }
+      const action = editingId 
+        ? db.collection("users").doc(currentUserId).collection("passwords").doc(editingId).set(data)
+        : db.collection("users").doc(currentUserId).collection("passwords").add(data);
+      
+      action.then(() => {
+          showToast(`Contraseña ${editingId ? 'actualizada' : 'guardada'}`, 'success');
+          clearForm();
+          loadPasswords();
+          // Considerar brevemente cambiar icono a check aquí si se desea
+      })
+      .catch(e => showToast(`Error: ${e.message}`, 'error'))
+      .finally(() => {
+        saveBtn.innerHTML = `<i class="fas fa-save"></i> ${editingId ? 'Actualizar' : 'Guardar'}`; // Restaura el icono original
+        saveBtn.disabled = false;
+      });
     };
 
     function loadPasswords(){
-      listDiv.innerHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin fa-2x"></i><br><br>Cargando contraseñas...</div>';
-      db.collection("users").doc(currentUserId).collection("passwords")
-        .orderBy("updated", "desc")
-        .get()
+      listDiv.innerHTML = `<div style="text-align:center;padding:2rem;"><i class="fas fa-spinner fa-spin fa-2x" aria-label="Cargando"></i><p style="margin-top:0.5rem;color:var(--text-muted);">Cargando...</p></div>`;
+      db.collection("users").doc(currentUserId).collection("passwords").orderBy("updated", "desc").get()
         .then(snapshot => {
-          listDiv.innerHTML = "";
           if(snapshot.empty){
-            listDiv.innerHTML = `
-              <div class="empty-state" tabindex="0">
-                <i class="fas fa-key" aria-hidden="true"></i>
-                <h3>No hay contraseñas guardadas</h3>
-                <p>Comienza guardando tu primera contraseña</p>
-              </div>
-            `;
+            listDiv.innerHTML = `<div class="empty-state" tabindex="0"><i class="fas fa-key" aria-hidden="true"></i><h3>No hay contraseñas</h3><p>Guarda tu primera contraseña segura.</p></div>`;
             return;
           }
+          listDiv.innerHTML = ""; // Clear previous list
           snapshot.forEach(doc => {
             const data = doc.data();
             const card = document.createElement("div");
@@ -879,127 +966,111 @@
             card.setAttribute("data-pwd-id", doc.id);
             card.innerHTML = `
               <div class="password-info">
-                <div class="password-title">
-                  <i class="fas fa-tag" aria-hidden="true"></i>
-                  ${decrypt(data.note)}
-                </div>
-                <div class="password-value" tabindex="0" aria-label="Contraseña">
-                  <span style="flex: 1;">${decrypt(data.pwd)}</span>
-                </div>
+                <div class="password-title"><i class="fas fa-tag" aria-hidden="true"></i> ${decrypt(data.note)}</div>
+                <div class="password-value" tabindex="0" aria-label="Contraseña"><span style="flex:1;">${decrypt(data.pwd)}</span></div>
               </div>
               <div class="card-actions">
-                <button onclick="copyPassword('${doc.id}')" class="btn btn-secondary btn-small" aria-label="Copiar contraseña">
-                  <i class="fas fa-copy"></i>
-                  Copiar
-                </button>
-                <button onclick="editPwd('${doc.id}')" class="btn btn-primary btn-small" aria-label="Editar contraseña">
-                  <i class="fas fa-edit"></i>
-                  Editar
-                </button>
-                <button onclick="deletePwd('${doc.id}')" class="btn btn-danger btn-small" aria-label="Eliminar contraseña">
-                  <i class="fas fa-trash"></i>
-                  Eliminar
-                </button>
-              </div>
-            `;
+                <button onclick="copyPassword('${doc.id}')" class="btn btn-secondary btn-small" aria-label="Copiar contraseña"><i class="fas fa-copy"></i> Copiar</button>
+                <button onclick="editPwd('${doc.id}')" class="btn btn-primary btn-small" aria-label="Editar contraseña"><i class="fas fa-edit"></i> Editar</button>
+                <button onclick="deletePwd('${doc.id}')" class="btn btn-danger btn-small" aria-label="Eliminar contraseña"><i class="fas fa-trash"></i> Eliminar</button>
+              </div>`;
             listDiv.appendChild(card);
           });
         })
         .catch(e => {
-          listDiv.innerHTML = '<div style="text-align: center; color: #f56565; padding: 2rem;">Error cargando contraseñas</div>';
-          showToast("Error cargando: " + e.message, 'error');
+          listDiv.innerHTML = `<div style="text-align:center;color:var(--danger-color-start);padding:2rem;">Error al cargar.</div>`;
+          showToast(`Error cargando: ${e.message}`, 'error');
         });
     }
 
     function clearForm(){
-      noteInput.value = "";
-      pwdInput.value = "";
-      pwdInput.type = "text"; 
+      noteInput.value = ""; pwdInput.value = ""; pwdInput.type = "text"; 
       editingId = null;
       formTitle.textContent = "Guardar Nueva Contraseña";
       saveBtnText.textContent = "Guardar";
       saveBtn.innerHTML = '<i class="fas fa-save"></i> Guardar';
       saveBtn.disabled = false;
       cancelBtn.classList.add("hidden");
-      noteInput.removeAttribute("aria-invalid");
-      pwdInput.removeAttribute("aria-invalid");
+      noteInput.removeAttribute("aria-invalid"); pwdInput.removeAttribute("aria-invalid");
+      noteInput.focus(); // Focus on note input after clearing
     }
 
     window.copyPassword = function(id){
-      db.collection("users").doc(currentUserId).collection("passwords").doc(id).get()
-        .then(doc => {
-          if(!doc.exists) return showToast("Contraseña no encontrada", 'error');
-          const data = doc.data();
-          copyToClipboard(decrypt(data.pwd));
-          const card = document.querySelector(`[data-pwd-id='${id}']`);
-          if(card){
-            const btn = card.querySelector(".btn-secondary");
-            btn.innerHTML = `<i class="fas fa-check"></i> Copiado`;
-            setTimeout(()=>{btn.innerHTML = `<i class="fas fa-copy"></i> Copiar`;},1100);
+      db.collection("users").doc(currentUserId).collection("passwords").doc(id).get().then(doc => {
+        if(!doc.exists) return showToast("Contraseña no encontrada", 'error');
+        copyToClipboard(decrypt(doc.data().pwd));
+        const buttonElement = document.querySelector(`[data-pwd-id='${id}'] .btn-secondary`);
+        if(buttonElement) {
+          const iconElement = buttonElement.querySelector('i');
+          if (iconElement) {
+            iconElement.classList.add('icon-copy-animating');
+            // Guardar el contenido original del botón para restaurarlo
+            const originalContent = buttonElement.innerHTML;
+            iconElement.addEventListener('animationend', () => {
+              iconElement.classList.remove('icon-copy-animating');
+              // Cambiar a check y luego volver al original
+              buttonElement.innerHTML = `<i class="fas fa-check"></i> Copiado`;
+              setTimeout(() => {buttonElement.innerHTML = originalContent;}, 1000);
+            }, { once: true });
           }
-        })
-        .catch(e => showToast("Error al copiar: " + e.message, 'error'));
+        }
+      }).catch(e => showToast(`Error al copiar: ${e.message}`, 'error'));
     };
 
     window.editPwd = function(id){
-      db.collection("users").doc(currentUserId).collection("passwords").doc(id).get()
-        .then(doc => {
-          if(!doc.exists) return showToast("Contraseña no encontrada", 'error');
-          const data = doc.data();
-          noteInput.value = decrypt(data.note);
-          pwdInput.value = decrypt(data.pwd);
-          pwdInput.type = "text"; 
-          editingId = id;
-          formTitle.textContent = "Editar Contraseña";
-          saveBtnText.textContent = "Actualizar";
-          saveBtn.innerHTML = '<i class="fas fa-save"></i> Actualizar';
-          cancelBtn.classList.remove("hidden");
-          document.querySelector('.section[aria-label="Formulario de contraseña"]').scrollIntoView({ behavior: 'smooth' });
-        })
-        .catch(e => showToast("Error al cargar para editar: " + e.message, 'error'));
+      db.collection("users").doc(currentUserId).collection("passwords").doc(id).get().then(doc => {
+        if(!doc.exists) return showToast("Contraseña no encontrada", 'error');
+        const data = doc.data();
+        noteInput.value = decrypt(data.note); pwdInput.value = decrypt(data.pwd); pwdInput.type = "text"; 
+        editingId = id;
+        formTitle.textContent = "Editar Contraseña"; saveBtnText.textContent = "Actualizar";
+        saveBtn.innerHTML = '<i class="fas fa-save"></i> Actualizar';
+        cancelBtn.classList.remove("hidden");
+        noteInput.focus();
+        document.querySelector('.section[aria-label="Formulario de contraseña"]').scrollIntoView({ behavior: 'smooth' });
+      }).catch(e => showToast(`Error al editar: ${e.message}`, 'error'));
     };
 
     window.deletePwd = function(id){
-      if(confirm("¿Estás seguro de que quieres eliminar esta contraseña? Esta acción no se puede deshacer.")){
+      if(confirm("¿Eliminar esta contraseña? Esta acción no se puede deshacer.")){
         db.collection("users").doc(currentUserId).collection("passwords").doc(id).delete()
-          .then(() => {
-            showToast("Contraseña eliminada exitosamente");
-            loadPasswords();
-          })
-          .catch(e => showToast("Error eliminando: " + e.message, 'error'));
+          .then(() => { showToast("Contraseña eliminada"); loadPasswords(); })
+          .catch(e => showToast(`Error eliminando: ${e.message}`, 'error'));
       }
     };
 
-    emailInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') loginBtn.click();
+    [emailInput, passwordInput, recoveryEmailInput, noteInput, pwdInput].forEach(el => {
+      el.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          if (el === emailInput || el === passwordInput) loginBtn.click();
+          else if (el === recoveryEmailInput) sendRecoveryBtn.click();
+          else if (el === noteInput) pwdInput.focus();
+          else if (el === pwdInput) saveBtn.click();
+        }
+      });
     });
-    passwordInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') loginBtn.click();
-    });
-    recoveryEmailInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') sendRecoveryBtn.click();
-    });
-    noteInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') pwdInput.focus();
-    });
-    pwdInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') saveBtn.click();
-    });
-
+    
     if(themeToggle){
-      if(localStorage.getItem('vaul-theme') === "dark") {
+      const currentTheme = localStorage.getItem('vault-theme');
+      if (currentTheme === "dark") {
         document.body.classList.add('dark');
         themeToggle.checked = true;
         themeToggle.setAttribute("aria-checked","true");
+      } else { // Default to light if no preference or invalid value
+        document.body.classList.remove('dark');
+        localStorage.setItem('vault-theme',"light"); // Ensure it's set
+        themeToggle.checked = false;
+        themeToggle.setAttribute("aria-checked","false");
       }
+
       themeToggle.onchange = () => {
         if(themeToggle.checked){
           document.body.classList.add('dark');
-          localStorage.setItem('vaul-theme',"dark");
+          localStorage.setItem('vault-theme',"dark");
           themeToggle.setAttribute("aria-checked","true");
         } else {
           document.body.classList.remove('dark');
-          localStorage.setItem('vaul-theme',"light");
+          localStorage.setItem('vault-theme',"light");
           themeToggle.setAttribute("aria-checked","false");
         }
       };
@@ -1007,34 +1078,73 @@
 
     if(generatePwd && pwdInput){
       generatePwd.onclick = function() {
-        pwdInput.value = generateStrongPassword();
+        pwdInput.value = Array(16).fill(null).map(() => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+".charAt(Math.floor(Math.random() * 79))).join('');
         pwdInput.type = "text";
         showToast("Contraseña segura generada");
       };
     }
-    function generateStrongPassword() {
-      const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+";
-      let pwd = "";
-      for(let i=0;i<16;++i) pwd += chars[Math.floor(Math.random()*chars.length)];
-      return pwd;
-    }
 
-    function showWelcome() {
-      if(currentUserId) {
-        const user = firebase.auth().currentUser;
-        if(user && user.email){
-          const welcome = document.createElement("div");
-          welcome.className = "toast";
-          welcome.style.top = "62px"; 
-          welcome.innerHTML = `<i class="fas fa-smile"></i> ¡Bienvenido/a, <b>${user.email}</b>!`;
-          document.body.appendChild(welcome);
-          setTimeout(()=>{welcome.remove();}, 3200); 
-        }
+    function updatePasswordStrength(password) {
+      let score = 0;
+      if (!password) {
+        strengthBar.className = 'strength-bar strength-0';
+        strengthText.textContent = '';
+        return;
       }
+
+      // Criterios de fortaleza
+      if (password.length >= 6) score++;
+      if (password.length >= 8) score++;
+      if (password.length >= 10) score++;
+      if (password.length > 12) score++; 
+
+      if (/[A-Z]/.test(password) && /[a-z]/.test(password)) score++; 
+      if (/\d/.test(password)) score++;
+      if (/[^A-Za-z0-9]/.test(password)) score++; // Símbolos
+
+      let strengthLevel = 0;
+      let text = '';
+
+      if (password.length < 6) {
+        strengthLevel = 1; // Muy Débil si es menor a 6 sin importar el score
+        text = 'Muy Débil';
+      } else if (score <= 2) {
+        strengthLevel = 1;
+        text = 'Muy Débil';
+      } else if (score <= 3) {
+        strengthLevel = 2;
+        text = 'Débil';
+      } else if (score <= 4) {
+        strengthLevel = 3;
+        text = 'Media';
+      } else if (score <= 5) {
+        strengthLevel = 4;
+        text = 'Fuerte';
+      } else {
+        strengthLevel = 5;
+        text = 'Muy Fuerte';
+      }
+      
+      if (password.length === 0) { // Si el campo está vacío después de borrar
+          strengthLevel = 0;
+          text = '';
+      }
+
+      strengthBar.className = `strength-bar strength-${strengthLevel}`;
+      strengthText.textContent = text;
+      strengthText.style.color = strengthBar.style.backgroundColor; // Color del texto igual al de la barra
     }
 
-    // Lógica de WebAuthn eliminada
+    pwdInput.addEventListener('input', (e) => {
+      updatePasswordStrength(e.target.value);
+    });
 
+    // Limpiar barra al limpiar formulario
+    const originalClearForm = clearForm;
+    clearForm = function() {
+      originalClearForm();
+      updatePasswordStrength(''); // Reset strength meter
+    }
   </script>
 </body>
 </html>
